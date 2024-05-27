@@ -5,7 +5,7 @@ const cors = require('cors');
 const app = express();
 
 require("dotenv").config();
-require(cors());
+app.use(cors());
 app.unsubscribe(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json()); // req.body가 객체로 인식된다
 

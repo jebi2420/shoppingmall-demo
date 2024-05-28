@@ -20,15 +20,33 @@ const RegisterPage = () => {
 
   const register = (event) => {
     event.preventDefault();
+    const { name, email, password, confirmPassword, policy } = formData;
     // 비번 중복확인 일치하는지 확인
+    if (password !== confirmPassword){
+      setPasswordError("비밀번호가 일치하지 않습니다 바보야");
+      return;
+    }
     // 이용약관에 체크했는지 확인
+    if (!policy){
+      setPolicyError(true);
+      return;
+    }
     // FormData에 있는 값을 가지고 백엔드로 넘겨주기
+    setPasswordError("");
+    setPolicyError(false);
+    dispatch(userActions.registerUser({ name, email, password }, navigate));
     //성공후 로그인 페이지로 넘어가기
   };
 
   const handleChange = (event) => {
     event.preventDefault();
     // 값을 읽어서 FormData에 넣어주기
+    const { id, value, checked } = event.target;
+    if(id === "policy"){
+      setFormData({ ...formData, [id]: checked});
+    }else{
+      setFormData({ ...formData, [id]: value});
+    }
   };
 
   return (

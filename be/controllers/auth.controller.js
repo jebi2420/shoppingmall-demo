@@ -17,9 +17,9 @@ authController.loginWithEmail = async(req, res) => {
                 return res.status(200).json({status: "success", user, token});
             }
         }
-        throw new Error("해당 이메일을 가진 유저가 없습니다");
+        throw new Error("이메일 또는 패스워드가 잘못되었습니다");
     }catch(error){
-        res.status(400).json({status: "fail", message: error.message});
+        res.status(400).json({status: "fail", error: error.message});
     }
 }
 

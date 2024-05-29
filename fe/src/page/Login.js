@@ -17,12 +17,14 @@ const Login = () => {
   const loginWithEmail = (event) => {
     event.preventDefault();
     //이메일,패스워드를 가지고 백엔드로 보내기
+    dispatch(userActions.loginWithEmail({ email, password }));
   };
 
   const handleGoogleLogin = async (googleData) => {
     // 구글로 로그인 하기
   };
 
+// user가 있으면 메인페이지로 돌아가기(이미 로그인한 유저는 로그인 페이지 못들어오게)
   if (user) {
     navigate("/");
   }

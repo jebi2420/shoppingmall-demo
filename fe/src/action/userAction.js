@@ -30,7 +30,14 @@ const loginWithEmail = ({email, password}) => async (dispatch) => {
     dispatch({type: types.LOGIN_FAIL, payload:error.error});
   }
 };
-const logout = () => async (dispatch) => {};
+
+// 로그아웃
+const logout = () => async (dispatch) => {
+  // user 정보를 지우고
+  dispatch({type: types.LOGOUT});
+  // session token의 값을 지운다
+  sessionStorage.removeItem("token");
+};
 
 const loginWithGoogle = (token) => async (dispatch) => {};
 

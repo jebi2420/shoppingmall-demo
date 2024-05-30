@@ -3,7 +3,22 @@ import * as types from "../constants/user.constants";
 import { commonUiActions } from "./commonUiAction";
 import * as commonTypes from "../constants/commonUI.constants";
 import { useNavigate } from 'react-router';
-const loginWithToken = () => async (dispatch) => {};
+// 토큰으로 로그인
+const loginWithToken = () => async (dispatch) => {
+  try{
+    dispatch({type: types.LOGIN_WITH_TOKEN_REQUEST});
+    const response = await api.get("/user/me");
+    if(response.status !== 200) throw new Error(response.error);
+    console.log("response:", response);
+    dispatch({type: types.LOGIN_WITH_TOKEN_SUCCESS, payload: response.data});
+  }catch(error){
+    dispatch({type: types.LOGIN_WITH_TOKEN_FAIL, payload:error.error});
+    // invalid 토큰이면 지워주기
+    dispatch(logout());
+  }
+};
+
+// 이메일로 로그인
 const loginWithEmail = ({email, password}) => async (dispatch) => {
   try{
     dispatch({type: types.LOGIN_REQUEST});
@@ -12,7 +27,7 @@ const loginWithEmail = ({email, password}) => async (dispatch) => {
     sessionStorage.setItem("token", response.data.token);
     dispatch({type: types.LOGIN_SUCCESS, payload:response.data});
   }catch(error){
-    dispatch({type:types.LOGIN_FAIL, payload:error.error});
+    dispatch({type: types.LOGIN_FAIL, payload:error.error});
   }
 };
 const logout = () => async (dispatch) => {};

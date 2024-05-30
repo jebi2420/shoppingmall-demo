@@ -14,6 +14,8 @@ const AppLayout = ({ children }) => {
   const user = null; // 로그인 기능 만들고 지우기
 
   // const { user } = useSelector((state) => state.user);
+
+  // 처음 UI가 로딩이 될 때, 토큰으로 로그인 시도
   useEffect(() => {
     dispatch(userActions.loginWithToken());
   }, []);

@@ -4,8 +4,11 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const app = express();
 const indexRouter = require("./routes/index");
-
 require("dotenv").config();
+
+const MONGODB_URI_PROD = process.env.MONGODB_URI_PROD;
+const LOCAL_DB_ADDRESS = process.env.LOCAL_DB_ADDRESS;
+
 app.use(cors());
 app.unsubscribe(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json()); // req.body가 객체로 인식된다

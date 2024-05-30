@@ -14,7 +14,7 @@ app.use("/api", indexRouter);
 
 
 // mongoDB 세팅
-const mongoURI = process.env.LOCAL_DB_ADDRESS;
+const mongoURI = process.env.MONGODB_URI_PROD;
 mongoose.connect(mongoURI, {useNewUrlParser:true})
     .then(()=>console.log("mongoose connected"))
     .catch((err)=>console.log("DB connection fail", error));

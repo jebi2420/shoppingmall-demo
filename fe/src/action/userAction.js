@@ -57,6 +57,7 @@ const registerUser =
     }
   };
 
+// 에러 메시지 초기화
 const clearError = () => (dispatch) => {
   dispatch({ type:types.REGISTER_USER_ERROR_CLEAR })
 }

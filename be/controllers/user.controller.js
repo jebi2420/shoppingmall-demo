@@ -35,7 +35,7 @@ userController.getUser = async (req, res) => {
         }
         throw new Error("Invalid token");
     }catch(error){
-        res.status(400).json({status: "fail", message: error.message});
+        res.status(400).json({status: "fail", error: error.message});
     }
 }
 

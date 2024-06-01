@@ -21,7 +21,7 @@ userController.createUser = async(req, res) => {
         return res.status(200).json({status: "success", message: "회원가입에 성공했습니다!"})
 
     }catch(error){
-        res.status(400).json({status: "fail", error: error.message});
+        res.status(400).json({status: "fail", message: error.message});
     }
 }
 

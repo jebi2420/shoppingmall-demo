@@ -19,12 +19,12 @@ const RegisterPage = () => {
   const error = useSelector((state) => state.user.error);
 
   // 에러 메시지 초기화
-  // useEffect(() => {
-  //   // 컴포넌트가 언마운트될 때 에러 메시지 초기화
-  //   return () => {
-  //     dispatch(userActions.clearError());
-  //   };
-  // }, [dispatch]);
+  useEffect(() => {
+    // 컴포넌트가 언마운트될 때 에러 메시지 초기화
+    return () => {
+      dispatch(userActions.clearError());
+    };
+  }, [dispatch]);
 
   const register = (event) => {
     event.preventDefault();

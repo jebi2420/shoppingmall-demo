@@ -45,7 +45,12 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
   };
 
   const handleChange = (event) => {
+    event.preventDefault();
     //form에 데이터 넣어주기
+    const { id, value } = event.target;
+    console.log(id, value);
+
+      // setFormData({ ...formData, [id]: value});
   };
 
   const addStock = () => {

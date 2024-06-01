@@ -41,6 +41,7 @@ const logout = () => async (dispatch) => {
 
 const loginWithGoogle = (token) => async (dispatch) => {};
 
+// 회원가입
 const registerUser =
   ({ email, name, password }, navigate) =>
   async (dispatch) => {
@@ -49,16 +50,21 @@ const registerUser =
       const response = await api.post("/user", {email, name, password});
       if(response.status !== 200){throw new Error(response.error);}
       dispatch({ type:types.REGISTER_USER_SUCCESS })
-      dispatch(commonUiActions.showToastMessage("회원가입을 완료 했습니다!", "success"));
+      dispatch(commonUiActions.showToastMessage("회원가입을 완료했습니다!", "success"));
       navigate("/login");
     }catch(error){
       dispatch({ type:types.REGISTER_USER_FAIL, payload:error.error })
     }
   };
+
+const clearError = () => (dispatch) => {
+  dispatch({ type:types.REGISTER_USER_ERROR_CLEAR })
+}
 export const userActions = {
   loginWithToken,
   loginWithEmail,
   logout,
   loginWithGoogle,
   registerUser,
+  clearError
 };

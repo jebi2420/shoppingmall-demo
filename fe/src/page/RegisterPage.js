@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Form, Button, Alert } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
@@ -18,12 +18,20 @@ const RegisterPage = () => {
   const [policyError, setPolicyError] = useState(false);
   const error = useSelector((state) => state.user.error);
 
+  // 에러 메시지 초기화
+  useEffect(() => {
+    // 컴포넌트가 언마운트될 때 에러 메시지 초기화
+    return () => {
+      dispatch(userActions.clearError());
+    };
+  }, [dispatch]);
+
   const register = (event) => {
     event.preventDefault();
     const { name, email, password, confirmPassword, policy } = formData;
     // 비번 중복확인 일치하는지 확인
     if (password !== confirmPassword){
-      setPasswordError("비밀번호가 일치하지 않습니다 바보야");
+      setPasswordError("비밀번호가 일치하지 않습니다");
       return;
     }
     // 이용약관에 체크했는지 확인
@@ -40,6 +48,8 @@ const RegisterPage = () => {
 
   const handleChange = (event) => {
     event.preventDefault();
+    // form 창에 변화 있을 시 에러메시지 초기화
+    dispatch(userActions.clearError());
     // 값을 읽어서 FormData에 넣어주기
     const { id, value, checked } = event.target;
     if(id === "policy"){

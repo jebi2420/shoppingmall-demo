@@ -23,6 +23,8 @@ function userReducer(state = initialState, action) {
       return { ...state, loading: false}
     case types.LOGOUT:
       return { ...state, user: null }
+    case types.REGISTER_USER_ERROR_CLEAR:
+      return { ...state, error:"" }
     default:
       return state;
   }

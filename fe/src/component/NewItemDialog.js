@@ -27,6 +27,8 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
   const [stock, setStock] = useState([]);
   const dispatch = useDispatch();
   const [stockError, setStockError] = useState(false);
+  console.log("stock", stock)
+
   const handleClose = () => {
     //모든걸 초기화시키고;
     // 다이얼로그 닫아주기
@@ -48,25 +50,32 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
     event.preventDefault();
     //form에 데이터 넣어주기
     const { id, value } = event.target;
-    console.log(id, value);
-
-      // setFormData({ ...formData, [id]: value});
+    setFormData({ ...formData, [id]: value});
   };
 
   const addStock = () => {
     //재고타입 추가시 배열에 새 배열 추가
+    setStock([...stock, []]);
   };
 
   const deleteStock = (idx) => {
     //재고 삭제하기
+    const newStock = stock.filter((item, index)=>index !== idx);
+    setStock(newStock);
   };
 
   const handleSizeChange = (value, index) => {
     //  재고 사이즈 변환하기
+    const newStock = [...stock];
+    newStock[index][0] = value;
+    setStock(newStock);
   };
 
   const handleStockChange = (value, index) => {
     //재고 수량 변환하기
+    const newStock = [...stock];
+    newStock[index][1] = value;
+    setStock(newStock);
   };
 
   const onHandleCategory = (event) => {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Form, Button, Alert } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,6 +13,27 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const error = useSelector((state) => state.user.error);
+
+  // 에러 메시지 초기화
+  useEffect(() => {
+    // 컴포넌트가 언마운트될 때 에러 메시지 초기화
+    return () => {
+      dispatch(userActions.clearError());
+    };
+  }, [dispatch]);
+
+  const handleChange = (event) => {
+    event.preventDefault();
+    // form 창에 변화 있을 시 에러메시지 초기화
+    dispatch(userActions.clearError());
+    // 값을 읽어서 FormData에 넣어주기
+    const { id, value } = event.target;
+    if(id === "email"){
+      setEmail(value);
+    }else{
+      setPassword(value);
+    }
+  };
 
   const loginWithEmail = (event) => {
     event.preventDefault();
@@ -42,8 +63,9 @@ const Login = () => {
             <Form.Control
               type="email"
               placeholder="Enter email"
+              id="email"
               required
-              onChange={(event) => setEmail(event.target.value)}
+              onChange={handleChange}
             />
           </Form.Group>
 
@@ -52,8 +74,9 @@ const Login = () => {
             <Form.Control
               type="password"
               placeholder="Password"
+              id="password"
               required
-              onChange={(event) => setPassword(event.target.value)}
+              onChange={handleChange}
             />
           </Form.Group>
           <div className="display-space-between login-button-area">

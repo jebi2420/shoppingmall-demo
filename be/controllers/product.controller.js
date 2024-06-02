@@ -36,7 +36,7 @@ productController.getProducts = async (req, res)=>{
     try{
         const product = await Product.find({}).toArray();
         if(product){
-            return res.status(200).json({status: "success", product});
+            return res.status(200).json({status: "success", data : product});
         }
         throw new Error("상품이 없거나 잘못되었습니다");
     }catch(error){

@@ -32,4 +32,16 @@ productController.createProduct = async (req, res) =>{
     }
 }
 
+productController.getProducts = async (req, res)=>{
+    try{
+        const product = await Product.find({}).toArray();
+        if(product){
+            return res.status(200).json({status: "success", product});
+        }
+        throw new Error("상품이 없거나 잘못되었습니다");
+    }catch(error){
+        res.status(400).json({status: "fail", error: error.message});
+    }
+}
+
 module.exports = productController;

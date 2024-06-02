@@ -9,4 +9,7 @@ router.post("/",
     authController.checkAdminPermission, // user가 admin 레벨인지 알아내기
     productController.createProduct); // admin 유저는 상품을 생성할 수 있다
 
+// 상품 보여주기
+router.get("/", productController.getProducts);
+
 module.exports = router;

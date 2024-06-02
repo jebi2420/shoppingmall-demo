@@ -6,7 +6,7 @@ productController.createProduct = async (req, res) =>{
     try{
         const {sku, name, size, image, category, description, price, stock, status} = req.body;
         // 모든 필수 정보가 입력되었는지 확인
-        if (!sku || !name || !size || !image || !category || !description || !price || !stock || !status) {
+        if (!sku || !name  || !image || !category || !description || !price || !stock || !status) {
             throw new Error("상품의 정보값을 모두 입력해주세요");
         }
         // sku 중복 방지
@@ -17,7 +17,6 @@ productController.createProduct = async (req, res) =>{
         const product = new Product({
             sku, 
             name, 
-            size, 
             image, 
             category, 
             description, 

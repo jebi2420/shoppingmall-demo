@@ -66,6 +66,8 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
   };
 
   const addStock = () => {
+    // 재고타입 수정하려고 할때 에러메시지 삭제
+    setStockError(false);
     //재고타입 추가시 배열에 새 배열 추가
     setStock([...stock, []]);
   };

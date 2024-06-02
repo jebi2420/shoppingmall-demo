@@ -169,6 +169,7 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
           <div className="mt-2">
             {stock.map((item, index) => (
               <Row key={index}>
+                {/* 재고 사이즈 */}
                 <Col sm={4}>
                   <Form.Select
                     onChange={(event) =>
@@ -180,6 +181,8 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
                     <option value="" disabled selected hidden>
                       Please Choose...
                     </option>
+
+                    {/* 이미 재고에 있는 사이즈는 비활성화 */}
                     {SIZE.map((item, index) => (
                       <option
                         invalid="true"
@@ -194,6 +197,7 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
                     ))}
                   </Form.Select>
                 </Col>
+                {/* 재고 수량 */}
                 <Col sm={6}>
                   <Form.Control
                     onChange={(event) =>
@@ -205,6 +209,7 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
                     required
                   />
                 </Col>
+                {/* 재고 항목 삭제하기 */}
                 <Col sm={2}>
                   <Button
                     variant="danger"

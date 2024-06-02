@@ -39,7 +39,6 @@ const logout = () => async (dispatch) => {
   dispatch({type: types.LOGOUT});
   // session token의 값을 지운다
   sessionStorage.removeItem("token");
-  dispatch(commonUiActions.showToastMessage("로그아웃 되었습니다","info"));
 };
 
 const loginWithGoogle = (token) => async (dispatch) => {};

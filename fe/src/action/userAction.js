@@ -26,6 +26,8 @@ const loginWithEmail = ({email, password}) => async (dispatch) => {
     if(response.status !== 200) throw new Error(response.error);
     sessionStorage.setItem("token", response.data.token);
     dispatch({type: types.LOGIN_SUCCESS, payload:response.data});
+    const name = response.data.user.name;
+    dispatch(commonUiActions.showToastMessage(`${name}님 환영합니다!`, "success"));
   }catch(error){
     dispatch({type: types.LOGIN_FAIL, payload:error.error});
   }
@@ -37,6 +39,7 @@ const logout = () => async (dispatch) => {
   dispatch({type: types.LOGOUT});
   // session token의 값을 지운다
   sessionStorage.removeItem("token");
+  dispatch(commonUiActions.showToastMessage("로그아웃 되었습니다","info"));
 };
 
 const loginWithGoogle = (token) => async (dispatch) => {};

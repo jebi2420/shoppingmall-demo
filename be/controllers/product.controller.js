@@ -34,7 +34,7 @@ productController.createProduct = async (req, res) =>{
 
 productController.getProducts = async (req, res)=>{
     try{
-        const product = await Product.find({}).toArray();
+        const product = await Product.find({});
         if(product){
             return res.status(200).json({status: "success", data : product});
         }

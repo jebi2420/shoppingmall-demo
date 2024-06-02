@@ -97,7 +97,7 @@ const Navbar = ({ user }) => {
             ) : (
               <div onClick={() => navigate("/login")} className="nav-icon">
                 <FontAwesomeIcon icon={faUser} />
-                {!isMobile && <span style={{ cursor: "pointer" }}>로그인</span>}
+                {!isMobile && <span style={{ cursor: "pointer" }}>로그인/회원가입</span>}
               </div>
             )}
             <div onClick={() => navigate("/cart")} className="nav-icon">

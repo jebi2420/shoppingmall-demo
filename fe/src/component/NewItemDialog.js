@@ -36,10 +36,18 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     //재고를 입력했는지 확인, 아니면 에러
-    // 재고를 배열에서 객체로 바꿔주기
-    // [['M',2]] 에서 {M:2}로
+    if(stock.length === 0)return setStockError(true);
+    // 재고를 배열에서 객체로 바꿔주기 [['M',2]] 에서 {M:2}로
+    const totalStock = stock.reduce((total,item)=>{
+      return {...total, [item[0]]:parseInt(item[1])}
+    },{})
+    console.log("formData", formData);
+    console.log("totalStock", totalStock);
     if (mode === "new") {
       //새 상품 만들기
+      dispatch(productActions.createProduct({...formData, stock: totalStock}));
+      // 상품 생성이 끝나면 dialog 창 끄기
+      setShowDialog(false);
     } else {
       // 상품 수정하기
     }
@@ -78,6 +86,8 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
   };
 
   const onHandleCategory = (event) => {
+    // 카테고리 값 변환
+    // 카테고리가 이미 추가되어 있으면 제거
     if (formData.category.includes(event.target.value)) {
       const newCategory = formData.category.filter(
         (item) => item !== event.target.value
@@ -87,6 +97,7 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
         category: [...newCategory],
       });
     } else {
+      // 아니면 새로 추가
       setFormData({
         ...formData,
         category: [...formData.category, event.target.value],
@@ -225,6 +236,7 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
           </div>
         </Form.Group>
 
+        {/* 상품 이미지 */}
         <Form.Group className="mb-3" controlId="Image" required>
           <Form.Label>Image</Form.Label>
           <CloudinaryUploadWidget uploadImage={uploadImage} />
@@ -235,7 +247,8 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
             alt="uploadedimage"
           ></img>
         </Form.Group>
-
+        
+        {/* 가격 */}
         <Row className="mb-3">
           <Form.Group as={Col} controlId="price">
             <Form.Label>Price</Form.Label>
@@ -248,6 +261,7 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
             />
           </Form.Group>
 
+          {/* 카테고리 */}
           <Form.Group as={Col} controlId="category">
             <Form.Label>Category</Form.Label>
             <Form.Control
@@ -265,6 +279,7 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
             </Form.Control>
           </Form.Group>
 
+          {/* 상태 */}
           <Form.Group as={Col} controlId="status">
             <Form.Label>Status</Form.Label>
             <Form.Select

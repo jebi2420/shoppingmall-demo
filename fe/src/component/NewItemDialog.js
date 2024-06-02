@@ -46,12 +46,17 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
     if (mode === "new") {
       //새 상품 만들기
       dispatch(productActions.createProduct({...formData, stock: totalStock}));
-      // 상품 생성이 끝나면 dialog 창 끄기
-      setShowDialog(false);
     } else {
       // 상품 수정하기
     }
   };
+
+  // 에러 나면 dialog창 유지, 상품 생성이 성공적으로 끝나면 dialog 창 끄기
+  useEffect(() => {
+    if (error === "") {
+        setShowDialog(false);
+    }
+  }, [error]);
 
   const handleChange = (event) => {
     event.preventDefault();

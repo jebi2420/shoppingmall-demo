@@ -34,9 +34,13 @@ productController.createProduct = async (req, res) =>{
 
 productController.getProducts = async (req, res)=>{
     try{
-        const product = await Product.find({});
-        if(product){
-            return res.status(200).json({status: "success", data : product});
+        const {page, name} = req.query;
+        const cond = name?{name:{$regex:name, $options:"i"}}:{}
+        let query = Product.find(cond); // 선언
+        const productList = await query.exec(); // 실행
+
+        if(productList){
+            return res.status(200).json({status: "success", data : productList});
         }
         throw new Error("상품이 없거나 잘못되었습니다");
     }catch(error){

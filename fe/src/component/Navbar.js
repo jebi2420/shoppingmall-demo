@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 import {
@@ -8,9 +8,10 @@ import {
   faShoppingBag,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../action/userAction";
+import SearchBox from "../component/SearchBox";
 
 const Navbar = ({ user }) => {
   const dispatch = useDispatch();
@@ -29,12 +30,15 @@ const Navbar = ({ user }) => {
   ];
   let [width, setWidth] = useState(0);
   let navigate = useNavigate();
+
+  // 검색 기능
   const onCheckEnter = (event) => {
     if (event.key === "Enter") {
-      if (event.target.value === "") {
+      const query = event.target.value;
+      if (query === "") {
         return navigate("/");
       }
-      navigate(`?name=${event.target.value}`);
+      navigate(`?name=${query}`);
     }
   };
   // 로그아웃

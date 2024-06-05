@@ -47,7 +47,7 @@ const RegisterPage = () => {
   };
 
   const handleChange = (event) => {
-    event.preventDefault();
+    // event.preventDefault();
     // form 창에 변화 있을 시 에러메시지 초기화
     dispatch(userActions.clearError());
     // 값을 읽어서 FormData에 넣어주기

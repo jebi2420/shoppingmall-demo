@@ -30,7 +30,9 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
 
   const handleClose = () => {
     //모든걸 초기화시키고;
+    setFormData({...InitialFormData});
     // 다이얼로그 닫아주기
+    setShowDialog(false);
   };
 
   const handleSubmit = (event) => {
@@ -131,7 +133,7 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
 
   return (
     <Modal show={showDialog} onHide={handleClose}>
-      <Modal.Header closeButton>
+      <Modal.Header closeButton onClick={handleClose}>
         {mode === "new" ? (
           <Modal.Title>Create New Product</Modal.Title>
         ) : (

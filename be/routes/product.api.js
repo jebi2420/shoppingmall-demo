@@ -12,4 +12,10 @@ router.post("/",
 // 상품 보여주기
 router.get("/", productController.getProducts);
 
+// 상품 수정하기
+router.put("/:id", 
+    authController.authenticate, // 토큰으로 user 정보 알아내기
+    authController.checkAdminPermission, // user가 admin 레벨인지 알아내기
+    productController.updateProduct);
+
 module.exports = router;

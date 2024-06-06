@@ -68,15 +68,22 @@ productController.getProducts = async (req, res)=>{
 productController.updateProduct = async (req, res) => {
     try{
         const productId = req.params.id; 
-        const {sku, name, size, image, category, description, price, stock, status} = req.body;
-        // sku 중복 방지
-        const skuNum = await Product.findOne({sku});
-        if(skuNum) throw new Error("이미 존재하는 상품번호(sku)입니다")
+        const {sku: newSku, name, size, image, category, description, price, stock, status} = req.body;
+        const existingProduct = await Product.findById(productId);
+        if (!existingProduct) {
+            throw new Error("상품이 존재하지 않습니다");
+        }
+        // sku 중복 방지 - 수정한 sku 값이 이전 값과 다를 때만 중복 검사 수행
+        if(newSku !== existingProduct.sku){
+            const skuNum = await Product.findOne({sku: newSku});
+            if(skuNum) throw new Error("이미 존재하는 상품번호(sku)입니다")
+        }
         const product = await Product.findByIdAndUpdate(
-            {_id: productId},
-            {sku, name, size, image, category, description, price, stock, status},{new:true}
+            productId,
+            {sku: newSku, name, size, image, category, description, price, stock, status},
+            {new:true}
         );
-        if(!product) throw new Error("상품이 존재하지 않습니다");
+        
         res.status(200).json({status:"success", data: product})    
     }catch(error){
         res.status(400).json({status: "fail", error: error.message});

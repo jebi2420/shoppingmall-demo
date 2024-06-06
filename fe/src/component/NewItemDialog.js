@@ -48,12 +48,12 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
     if (mode === "new") {
       //새 상품 만들기
       dispatch(productActions.createProduct({...formData, stock: totalStock}));
-      setShowDialog(false);
-    } else {
+      if(!{error})setShowDialog(false);
+    } else{
       // 상품 수정하기
       dispatch(productActions.editProduct({...formData, stock: totalStock}, selectedProduct._id))
-      setShowDialog(false);
-    }
+      if(!{error})setShowDialog(false);
+    } 
   };
 
   // 에러 나면 dialog창 유지, 상품 생성이 성공적으로 끝나면 dialog 창 끄기

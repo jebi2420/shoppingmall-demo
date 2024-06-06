@@ -11,10 +11,13 @@ import "../style/productDetail.style.css";
 
 const ProductDetail = () => {
   const dispatch = useDispatch();
-
+  const { selectedProduct } = useSelector(state=>state.product);
+  const item = selectedProduct?.data;
   const [size, setSize] = useState("");
   const { id } = useParams();
   const [sizeError, setSizeError] = useState(false);
+
+  const itemSize = Object.keys(item.stock);
 
   const navigate = useNavigate();
 
@@ -25,6 +28,8 @@ const ProductDetail = () => {
   };
   const selectSize = (value) => {
     // 사이즈 추가하기
+    setSize(value);
+    setSizeError(false);
   };
 
   //카트에러가 있으면 에러메세지 보여주기
@@ -33,6 +38,8 @@ const ProductDetail = () => {
 
   useEffect(() => {
     //상품 디테일 정보 가져오기
+    dispatch(productActions.getProductDetail(id))
+    console.log("selected", item)
   }, [id]);
 
   return (
@@ -40,43 +47,70 @@ const ProductDetail = () => {
       <Row>
         <Col sm={6}>
           <img
-            src="https://lp2.hm.com/hmgoepprod?set=quality%5B79%5D%2Csource%5B%2F3a%2F04%2F3a04ededbfa6a7b535e0ffa30474853fc95d2e81.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5B%5D%2Ctype%5BLOOKBOOK%5D%2Cres%5Bm%5D%2Chmver%5B1%5D&call=url[file:/product/fullscreen]"
+            src={item?.image}
             className="w-100"
             alt="image"
           />
         </Col>
         <Col className="product-info-area" sm={6}>
-          <div className="product-info">리넨셔츠</div>
-          <div className="product-info">₩ 45,000</div>
-          <div className="product-info">샘플설명</div>
-
-          <Dropdown
-            className="drop-down size-drop-down"
-            title={size}
-            align="start"
-            onSelect={(value) => selectSize(value)}
-          >
-            <Dropdown.Toggle
-              className="size-drop-down"
-              variant={sizeError ? "outline-danger" : "outline-dark"}
-              id="dropdown-basic"
+          <div className="product-info">{item?.name}</div>
+          {item?.status === "active"? "" : <div>품절</div>}
+          <div className="product-info">₩ {item?.price}</div>
+          <div className="product-info">{item?.description}</div>
+          {item?.status === "active"? 
+            <Dropdown
+              className="drop-down size-drop-down"
+              title={size}
               align="start"
+              onSelect={selectSize}
             >
-              {size === "" ? "사이즈 선택" : size.toUpperCase()}
-            </Dropdown.Toggle>
+              <Dropdown.Toggle
+                className="size-drop-down"
+                variant={sizeError ? "outline-danger" : "outline-dark"}
+                id="dropdown-basic"
+                align="start"
+              >
+                {size === "" ? "사이즈 선택" : size?.toUpperCase()}
+              </Dropdown.Toggle>
 
-            <Dropdown.Menu className="size-drop-down">
-              <Dropdown.Item>M</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
+              <Dropdown.Menu className="size-drop-down">
+                {item?.stock && itemSize.map((size, index)=>(
+                  <Dropdown.Item key={index} eventKey={size} className='dropdown-item'>
+                    {size.toUpperCase()}
+                    <div>{item.stock[size] <=5? `재고: ${item.stock[size]}` : "" }</div>
+                  </Dropdown.Item>
+                ))}              
+              </Dropdown.Menu>
+              
+              {/* <Dropdown.Menu className="size-drop-down">
+                {item?.stock && Object.keys(item.stock).map((size, index)=>(
+                  <Dropdown.Item key={index} className='dropdown-item'>
+                    {size.toUpperCase()}
+                    <div>{item.stock[size] <=5? `재고: ${item.stock[size]}` : "" }</div>
+                  </Dropdown.Item>
+                ))}              
+              </Dropdown.Menu> */}
+            </Dropdown>
+
+            : ""
+          }
           <div className="warning-message">
             {sizeError && "사이즈를 선택해주세요."}
           </div>
-          <Button variant="dark" className="add-button" onClick={addItemToCart}>
-            추가
-          </Button>
+          {item?.status === "active"? 
+            <Button variant="dark" className="add-button" onClick={addItemToCart}>
+              추가
+            </Button>
+          : ""
+          }
+
         </Col>
       </Row>
+      {/* <img
+            src="https://lp2.hm.com/hmgoepprod?set=quality%5B79%5D%2Csource%5B%2F3a%2F04%2F3a04ededbfa6a7b535e0ffa30474853fc95d2e81.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5B%5D%2Ctype%5BLOOKBOOK%5D%2Cres%5Bm%5D%2Chmver%5B1%5D&call=url[file:/product/fullscreen]"
+            className="w-100"
+            alt="image"
+          /> */}
     </Container>
   );
 };

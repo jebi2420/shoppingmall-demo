@@ -123,7 +123,7 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
   };
 
   useEffect(() => {
-    if (showDialog) {
+    if (showDialog && selectedProduct) {
       if (mode === "edit") {
         // 선택된 데이터값 불러오기 (재고 형태 객체에서 어레이로 바꾸기)
         setFormData(selectedProduct);
@@ -139,7 +139,7 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
         setStock([]);
       }
     }
-  }, [showDialog]);
+  }, [showDialog, selectedProduct]);
 
   //에러나면 토스트 메세지 보여주기
 

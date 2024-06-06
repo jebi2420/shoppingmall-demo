@@ -1,4 +1,5 @@
 const Product = require("../models/Product");
+const mongoose = require('mongoose');
 
 const productController = {};
 
@@ -85,6 +86,9 @@ productController.updateProduct = async (req, res) => {
 productController.deleteProduct = async (req, res) => {
     try{
         const productId = req.params.id; 
+        if (!mongoose.Types.ObjectId.isValid(productId)) {
+            throw new Error("유효하지 않은 상품 ID입니다");
+        }
         const product = await Product.findByIdAndUpdate(
             productId,
             { $set: { isDeleted: true } },

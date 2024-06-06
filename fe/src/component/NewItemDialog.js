@@ -28,6 +28,7 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
   const dispatch = useDispatch();
   const [stockError, setStockError] = useState(false);
 
+  // < 다이얼로그 닫기 >
   const handleClose = () => {
     //모든걸 초기화시키고;
     setFormData({...InitialFormData});
@@ -35,6 +36,7 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
     setShowDialog(false);
   };
 
+  // < submit 버튼 >
   const handleSubmit = (event) => {
     event.preventDefault();
     //재고를 입력했는지 확인, 아니면 에러
@@ -46,6 +48,7 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
     if (mode === "new") {
       //새 상품 만들기
       dispatch(productActions.createProduct({...formData, stock: totalStock}));
+      setShowDialog(false);
     } else {
       // 상품 수정하기
       dispatch(productActions.editProduct({...formData, stock: totalStock}, selectedProduct._id))

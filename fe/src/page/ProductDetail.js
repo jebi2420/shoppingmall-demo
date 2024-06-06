@@ -12,6 +12,7 @@ import "../style/productDetail.style.css";
 const ProductDetail = () => {
   const dispatch = useDispatch();
   const { selectedProduct } = useSelector(state=>state.product);
+  const loading = useSelector((state) => state.product.loading);
   const item = selectedProduct?.data;
   const [size, setSize] = useState("");
   const { id } = useParams();
@@ -39,6 +40,22 @@ const ProductDetail = () => {
     dispatch(productActions.getProductDetail(id))
     console.log("selected", item)
   }, [id]);
+
+  if (loading || !selectedProduct)
+  return (
+    <div class="spinner-container">
+      <ColorRing
+        className='color-ring'
+        visible={true}
+        height="80"
+        width="80"
+        ariaLabel="blocks-loading"
+        wrapperStyle={{}}
+        wrapperClass="blocks-wrapper"
+        colors={["#e15b64", "#f47e60", "#f8b26a", "#abbd81", "#849b87"]}
+      />
+    </div>
+  );
 
   return (
     <Container className="product-detail-card">

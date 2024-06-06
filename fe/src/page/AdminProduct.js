@@ -9,6 +9,7 @@ import ReactPaginate from "react-paginate";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { commonUiActions } from "../action/commonUiAction";
 import ProductTable from "../component/ProductTable";
+import AlertModal from '../component/AlertModal';
 
 const AdminProduct = () => {
   const navigate = useNavigate();
@@ -16,6 +17,7 @@ const AdminProduct = () => {
   const [query, setQuery] = useSearchParams();
   const dispatch = useDispatch();
   const [showDialog, setShowDialog] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [searchQuery, setSearchQuery] = useState({
     page: query.get("page") || 1,
     name: query.get("name") || "",
@@ -53,7 +55,9 @@ const AdminProduct = () => {
 
   // < 아이템 삭제하기 >
   const deleteItem = (id) => {
-    dispatch(productActions.deleteProduct(id));
+    setShowModal(true);
+    // dispatch(commonUiActions.showAlertModal("정말 삭제하시겠습니까?"));
+    // dispatch(productActions.deleteProduct(id));
   };
 
   // < 상품 수정하기 form 열기 >
@@ -128,6 +132,12 @@ const AdminProduct = () => {
         showDialog={showDialog}
         setShowDialog={setShowDialog}
       />
+
+      <AlertModal 
+        showModal={showModal}
+        setShowModal={setShowModal}
+      />
+
     </div>
   );
 };

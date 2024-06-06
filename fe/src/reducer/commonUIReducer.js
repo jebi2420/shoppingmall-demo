@@ -1,6 +1,7 @@
 import * as types from "../constants/commonUI.constants";
 const initialState = {
   toastMessage: { message: "", status: "" },
+  modalMessage:""
 };
 
 function commonUiReducer(state = initialState, action) {
@@ -16,7 +17,11 @@ function commonUiReducer(state = initialState, action) {
           status: payload.status,
         },
       };
-
+    case types.SET_ALERT_MODAL:
+      return {
+        ...state,
+        modalMessage: payload
+      }
     default:
       return state;
   }

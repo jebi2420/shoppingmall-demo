@@ -14,7 +14,7 @@ productController.createProduct = async (req, res) =>{
         // sku 중복 방지
         const skuNum = await Product.findOne({sku});
         if(skuNum){
-            throw new Error("이미 존재하는 상품입니다")
+            throw new Error("이미 존재하는 상품번호(sku)입니다")
         }
         const product = new Product({
             sku, 
@@ -64,6 +64,11 @@ productController.updateProduct = async (req, res) => {
     try{
         const productId = req.params.id; 
         const {sku, name, size, image, category, description, price, stock, status} = req.body;
+        // sku 중복 방지
+        const skuNum = await Product.findOne({sku});
+        if(skuNum){
+            throw new Error("이미 존재하는 상품번호(sku)입니다")
+        }
         const product = await Product.findByIdAndUpdate(
             {_id: productId},
             {sku, name, size, image, category, description, price, stock, status},{new:true}

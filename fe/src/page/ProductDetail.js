@@ -17,7 +17,7 @@ const ProductDetail = () => {
   const { id } = useParams();
   const [sizeError, setSizeError] = useState(false);
 
-  const itemSize = Object.keys(item.stock);
+  const itemSize = Object.keys(item?.stock);
 
   const navigate = useNavigate();
 

@@ -3,6 +3,7 @@ import * as types from "../constants/product.constants";
 import { toast } from "react-toastify";
 import { commonUiActions } from "./commonUiAction";
 
+// 상품 리스트 가져오기
 const getProductList = (query) => async (dispatch) => {
   try{
     dispatch({type: types.PRODUCT_GET_REQUEST});
@@ -17,8 +18,11 @@ const getProductList = (query) => async (dispatch) => {
     dispatch(commonUiActions.showToastMessage(error.error, "error"));
   }
 };
+
+// 상품 디테일 가져오기
 const getProductDetail = (id) => async (dispatch) => {};
 
+// 상품 생성
 const createProduct = (formData) => async (dispatch) => {
   try{
     dispatch({type: types.PRODUCT_CREATE_REQUEST});
@@ -33,8 +37,11 @@ const createProduct = (formData) => async (dispatch) => {
     dispatch(commonUiActions.showToastMessage(error.error, "error"));
   }
 };
+
+// 상품 삭제
 const deleteProduct = (id) => async (dispatch) => {};
 
+// 상품 수정
 const editProduct = (formData, id) => async (dispatch) => {
   try{
     dispatch({type: types.PRODUCT_EDIT_REQUEST});

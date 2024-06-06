@@ -33,11 +33,12 @@ const AdminProduct = () => {
     "",
   ];
 
-  //상품리스트 가져오기 (url쿼리 맞춰서)
+  // < 상품리스트 가져오기 (url쿼리 맞춰서) >
   useEffect(()=>{
     dispatch(productActions.getProductList({...searchQuery}));
   },[query]);
 
+  // < 검색어나 페이지가 바뀌면 url바꿔주기 >
   useEffect(() => {
     //검색어나 페이지가 바뀌면 url바꿔주기 (검색어 또는 페이지가 바뀜 => url 바꿔줌=> 
     //url쿼리 읽어옴 => 이 쿼리값 맞춰서  상품리스트 가져오기)
@@ -50,10 +51,12 @@ const AdminProduct = () => {
     navigate("?" + query);
   }, [searchQuery]);
 
+  // < 아이템 삭제하기 >
   const deleteItem = (id) => {
-    //아이템 삭제하가ㅣ
+  
   };
 
+  // < 상품 수정하기 form 열기 >
   const openEditForm = (product) => {
     //edit모드로 설정하고
     setMode("edit");
@@ -62,16 +65,16 @@ const AdminProduct = () => {
     setShowDialog(true);
   };
 
+   // < 상품 생성하기 form 열기 >
   const handleClickNewItem = () => {
     //new 모드로 설정하고 (비어있는 폼)
     setMode("new");
     // 다이얼로그 열어주기
     setShowDialog(true);
-
   };
 
+  // < 쿼리에 페이지값 바꿔주기 >
   const handlePageClick = ({ selected }) => {
-    //  쿼리에 페이지값 바꿔주기
     setSearchQuery({...searchQuery, page: selected +1});
   };
 

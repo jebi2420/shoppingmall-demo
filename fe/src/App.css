@@ -93,6 +93,7 @@ body{
 .card{
   border:none !important;
   margin-bottom: 10px;
+  cursor: pointer;
 }
 
 .choice{
@@ -120,6 +121,15 @@ body{
 
 .drop-down{
   margin-top:20px;
+}
+
+.dropdown-item{
+  display: flex;
+  justify-content: space-between;
+}
+
+.dropdown-item div{
+  color: red;
 }
 
 .add-button{

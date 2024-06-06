@@ -10,7 +10,6 @@ const getProductList = (query) => async (dispatch) => {
     const response = await api.get("/product", {
       params: {...query} //검색조건 함께 보내기
     });
-    console.log("response", response)
     if(response.status !== 200) throw new Error(response.error);
     dispatch({type: types.PRODUCT_GET_SUCCESS, payload: response.data});
   }catch(error){

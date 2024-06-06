@@ -60,8 +60,6 @@ const AdminProduct = () => {
     console.log("idd", selectedId)
     setSelectedName(name);
     setShowModal(true);
-    // dispatch(commonUiActions.showAlertModal("정말 삭제하시겠습니까?"));
-    // dispatch(productActions.deleteProduct(id));
   };
 
   // < 상품 수정하기 form 열기 >

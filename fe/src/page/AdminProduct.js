@@ -18,6 +18,8 @@ const AdminProduct = () => {
   const dispatch = useDispatch();
   const [showDialog, setShowDialog] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [selectedId, setSelectedId] = useState(null);
+  const [selectedName, setSelectedName] = useState("");
   const [searchQuery, setSearchQuery] = useState({
     page: query.get("page") || 1,
     name: query.get("name") || "",
@@ -47,14 +49,16 @@ const AdminProduct = () => {
     if(searchQuery === ""){
       delete searchQuery.name;
     }
-    console.log("searchQuery:", searchQuery)
     const params = new URLSearchParams(searchQuery);
     const query = params.toString();
     navigate("?" + query);
   }, [searchQuery]);
 
   // < 아이템 삭제하기 >
-  const deleteItem = (id) => {
+  const deleteItem = (id, name) => {
+    setSelectedId(id);
+    console.log("idd", selectedId)
+    setSelectedName(name);
     setShowModal(true);
     // dispatch(commonUiActions.showAlertModal("정말 삭제하시겠습니까?"));
     // dispatch(productActions.deleteProduct(id));
@@ -136,6 +140,8 @@ const AdminProduct = () => {
       <AlertModal 
         showModal={showModal}
         setShowModal={setShowModal}
+        selectedId={selectedId}
+        selectedName={selectedName}
       />
 
     </div>

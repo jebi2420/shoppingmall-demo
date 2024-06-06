@@ -53,7 +53,7 @@ const AdminProduct = () => {
 
   // < 아이템 삭제하기 >
   const deleteItem = (id) => {
-  
+    dispatch(productActions.deleteProduct(id));
   };
 
   // < 상품 수정하기 form 열기 >

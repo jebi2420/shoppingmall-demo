@@ -33,6 +33,7 @@ const ProductTable = ({ header, data, deleteItem, openEditForm }) => {
                 </th>
                 <th>{item.status}</th>
                 <th style={{ minWidth: "100px" }}>
+                  {/* 상품 삭제 버튼 */}
                   <Button
                     size="sm"
                     variant="danger"
@@ -41,6 +42,7 @@ const ProductTable = ({ header, data, deleteItem, openEditForm }) => {
                   >
                     -
                   </Button>
+                  {/* 상품 수정 버튼 */}
                   <Button size="sm" onClick={() => openEditForm(item)}>
                     Edit
                   </Button>

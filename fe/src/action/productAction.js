@@ -39,7 +39,20 @@ const createProduct = (formData) => async (dispatch) => {
 };
 
 // 상품 삭제
-const deleteProduct = (id) => async (dispatch) => {};
+const deleteProduct = (id) => async (dispatch) => {
+  try{
+    dispatch({type: types.PRODUCT_DELETE_REQUEST});
+    const response = await api.put(`/product/delete/${id}`);
+    if(response.status !== 200) throw new Error (response.error);
+    dispatch({type: types.PRODUCT_DELETE_SUCCESS});
+    dispatch(commonUiActions.showToastMessage("상품 삭제 완료", "success"));
+    // 삭제 반영 위해 다시 productList 전체 갖고 오기
+    dispatch(getProductList({page:1, name:""}));
+  }catch(error){
+    dispatch({type: types.PRODUCT_DELETE_FAIL, payload: error.error});
+    dispatch(commonUiActions.showToastMessage(error.error, "error"));
+  }
+};
 
 // 상품 수정
 const editProduct = (formData, id) => async (dispatch) => {

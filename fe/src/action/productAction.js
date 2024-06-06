@@ -30,6 +30,8 @@ const createProduct = (formData) => async (dispatch) => {
     dispatch({type: types.PRODUCT_CREATE_SUCCESS});
     // ToastMessage로 생성완료 메시지 보여주기
     dispatch(commonUiActions.showToastMessage("상품 생성 완료", "success"));
+    // 생성 반영 위해 다시 productList 전체 갖고 오기
+    dispatch(getProductList({page:1, name:""}));
   }catch(error){
     dispatch({type: types.PRODUCT_CREATE_FAIL, payload: error.error});
     // ToastMessage로도 에러를 보여주자

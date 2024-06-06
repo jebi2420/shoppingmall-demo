@@ -9,27 +9,14 @@ const ProductCard = ({item}) => {
     // 상품 디테일 페이지로 가기
   };
   return (
-    <div className='carddd'>
-        {item ? (
-            <div className="card" onClick={() => showProduct("hard_code")}>
-              <img
-                src={item.image}
-                alt="product-image"
-              />
-              <div>{item.name}</div>
-              <div>₩ {currencyFormat(item.price)}</div>
-              <div>{item.status === "disactive"?"품절": ""}</div>
-            </div>
-        ) : (
-          <div className="card" onClick={() => showProduct("hard_code")}>
-            <img
-              src="https://lp2.hm.com/hmgoepprod?set=quality%5B79%5D%2Csource%5B%2F3a%2F04%2F3a04ededbfa6a7b535e0ffa30474853fc95d2e81.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5B%5D%2Ctype%5BLOOKBOOK%5D%2Cres%5Bm%5D%2Chmver%5B1%5D&call=url[file:/product/fullscreen]"
-              alt=""
-            />
-            <div>리넨셔츠</div>
-            <div>₩ 45,000</div>
-          </div>
-        )}
+    <div className="card" onClick={() => showProduct("hard_code")}>
+      <img
+        src={item?.image}
+        alt="product-image"
+      />
+      <div>{item?.name}</div>
+      <div>₩ {currencyFormat(item?.price)}</div>
+      <div>{item.status === "disactive"?"품절": ""}</div>
     </div>
   );
 };

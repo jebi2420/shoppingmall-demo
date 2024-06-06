@@ -8,7 +8,7 @@ import {
   faShoppingBag,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useSearchParams, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../action/userAction";
 import SearchBox from "../component/SearchBox";
@@ -18,6 +18,8 @@ const Navbar = ({ user }) => {
   const { cartItemCount } = useSelector((state) => state.cart);
   const isMobile = window.navigator.userAgent.indexOf("Mobile") !== -1;
   const [showSearchBox, setShowSearchBox] = useState(false);
+  const [inputValue, setInputValue] = useState("");
+  const location = useLocation();
   const menuList = [
     "여성",
     "Divided",
@@ -31,6 +33,14 @@ const Navbar = ({ user }) => {
   let [width, setWidth] = useState(0);
   let navigate = useNavigate();
 
+  useEffect(() => {
+    // URL에 query parameter가 없는 경우에만 input 값을 초기화
+    const searchParams = new URLSearchParams(location.search);
+    if (!searchParams.has('name')) {
+      setInputValue("");
+    }
+  }, [location]);
+
   // 검색 기능
   const onCheckEnter = (event) => {
     if (event.key === "Enter") {
@@ -41,6 +51,16 @@ const Navbar = ({ user }) => {
       navigate(`?name=${query}`);
     }
   };
+
+  const handleChange = (event) => {
+    setInputValue(event.target.value);
+  };
+
+  const handleFocus = () => {
+    // input에 마우스를 클릭했을 때 input 값을 초기화
+    setInputValue("");
+  };
+
   // 로그아웃
   const logout = () => {
     dispatch(userActions.logout());
@@ -148,6 +168,9 @@ const Navbar = ({ user }) => {
               type="text"
               placeholder="제품검색"
               onKeyPress={onCheckEnter}
+              value={inputValue}
+              onFocus={handleFocus}
+              onChange={handleChange}
             />
           </div>
         )}

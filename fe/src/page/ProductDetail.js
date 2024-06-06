@@ -17,8 +17,6 @@ const ProductDetail = () => {
   const { id } = useParams();
   const [sizeError, setSizeError] = useState(false);
 
-  const itemSize = Object.keys(item?.stock);
-
   const navigate = useNavigate();
 
   const addItemToCart = () => {
@@ -72,24 +70,15 @@ const ProductDetail = () => {
               >
                 {size === "" ? "사이즈 선택" : size?.toUpperCase()}
               </Dropdown.Toggle>
-
+              
               <Dropdown.Menu className="size-drop-down">
-                {item?.stock && itemSize.map((size, index)=>(
+                {item?.stock && Object.keys(item.stock).map((size, index)=>(
                   <Dropdown.Item key={index} eventKey={size} className='dropdown-item'>
                     {size.toUpperCase()}
                     <div>{item.stock[size] <=5? `재고: ${item.stock[size]}` : "" }</div>
                   </Dropdown.Item>
                 ))}              
               </Dropdown.Menu>
-              
-              {/* <Dropdown.Menu className="size-drop-down">
-                {item?.stock && Object.keys(item.stock).map((size, index)=>(
-                  <Dropdown.Item key={index} className='dropdown-item'>
-                    {size.toUpperCase()}
-                    <div>{item.stock[size] <=5? `재고: ${item.stock[size]}` : "" }</div>
-                  </Dropdown.Item>
-                ))}              
-              </Dropdown.Menu> */}
             </Dropdown>
 
             : ""
@@ -106,11 +95,6 @@ const ProductDetail = () => {
 
         </Col>
       </Row>
-      {/* <img
-            src="https://lp2.hm.com/hmgoepprod?set=quality%5B79%5D%2Csource%5B%2F3a%2F04%2F3a04ededbfa6a7b535e0ffa30474853fc95d2e81.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5B%5D%2Ctype%5BLOOKBOOK%5D%2Cres%5Bm%5D%2Chmver%5B1%5D&call=url[file:/product/fullscreen]"
-            className="w-100"
-            alt="image"
-          /> */}
     </Container>
   );
 };

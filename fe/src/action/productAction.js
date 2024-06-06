@@ -22,7 +22,7 @@ const getProductList = (query) => async (dispatch) => {
 const getProductDetail = (id) => async (dispatch) => {};
 
 // 상품 생성
-const createProduct = (formData) => async (dispatch) => {
+const createProduct = (formData, setShowDialog) => async (dispatch) => {
   try{
     dispatch({type: types.PRODUCT_CREATE_REQUEST});
     const response = await api.post("/product", formData);
@@ -30,6 +30,7 @@ const createProduct = (formData) => async (dispatch) => {
     dispatch({type: types.PRODUCT_CREATE_SUCCESS});
     // ToastMessage로 생성완료 메시지 보여주기
     dispatch(commonUiActions.showToastMessage("상품 생성 완료", "success"));
+    setShowDialog(false);
     // 생성 반영 위해 다시 productList 전체 갖고 오기
     dispatch(getProductList({page:1, name:""}));
   }catch(error){
@@ -56,13 +57,14 @@ const deleteProduct = (id) => async (dispatch) => {
 };
 
 // 상품 수정
-const editProduct = (formData, id) => async (dispatch) => {
+const editProduct = (formData, id, setShowDialog) => async (dispatch) => {
   try{
     dispatch({type: types.PRODUCT_EDIT_REQUEST});
     const response = await api.put(`/product/${id}`, formData);
     if(response.status !== 200) throw new Error (response.error);
     dispatch({type: types.PRODUCT_EDIT_SUCCESS});
     dispatch(commonUiActions.showToastMessage("상품 수정 완료", "success"));
+    setShowDialog(false);
     // 수정 반영 위해 다시 productList 전체 갖고 오기
     dispatch(getProductList({page:1, name:""}));
   }catch(error){

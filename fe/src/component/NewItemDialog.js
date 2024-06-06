@@ -45,21 +45,28 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
     const totalStock = stock.reduce((total,item)=>{
       return {...total, [item[0]]:parseInt(item[1])}
     },{})
+    // 상품 생성, 수정 성공한 경우 dialog창 끄기
+    const handleCloseDialog = () => {
+      if (error === "") {
+        setShowDialog(false);
+      }
+    }
     if (mode === "new") {
       //새 상품 만들기
       dispatch(productActions.createProduct({...formData, stock: totalStock}));
-      if(!{error})setShowDialog(false);
     } else{
       // 상품 수정하기
       dispatch(productActions.editProduct({...formData, stock: totalStock}, selectedProduct._id))
-      if(!{error})setShowDialog(false);
     } 
+    handleCloseDialog();
   };
 
-  // 에러 나면 dialog창 유지, 상품 생성이 성공적으로 끝나면 dialog 창 끄기
-  useEffect(() => {
+   // 에러 나면 dialog창 유지, 상품 생성이 성공적으로 끝나면 dialog 창 끄기
+   useEffect(() => {
     if (error === "") {
-        setShowDialog(false);
+      setShowDialog(false);
+    } else {
+      setShowDialog(true);
     }
   }, [error]);
 

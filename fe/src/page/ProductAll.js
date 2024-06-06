@@ -5,12 +5,14 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { productActions } from "../action/productAction";
 import { commonUiActions } from "../action/commonUiAction";
+import  LoadingSpinner  from "../component/LoadingSpinner";
 
 const ProductAll = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const error = useSelector((state) => state.product.error);
   const { productList } = useSelector(state=>state.product);
+  const loading = useSelector((state) => state.product.loading);
   const [query, setQuery] = useSearchParams();
   const name = query.get("name");
 
@@ -18,6 +20,12 @@ const ProductAll = () => {
   useEffect(()=>{
     dispatch(productActions.getProductList({name}));
   },[query]);
+
+  if (loading || !productList)
+  return (
+    <LoadingSpinner />
+  );
+
 
   return (
     <Container>
@@ -33,7 +41,7 @@ const ProductAll = () => {
             {name === "" ? (
               <h2>등록된 상품이 없습니다!</h2>
             ) : (
-              <h2>{name}과 일치한 상품이 없습니다!`</h2>
+              <h2>{name}과 일치한 상품이 없습니다!</h2>
             )}
           </div>
         )}

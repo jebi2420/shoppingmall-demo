@@ -4,6 +4,7 @@ import { Container, Row, Col, Button, Dropdown } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { productActions } from "../action/productAction";
 import { ColorRing } from "react-loader-spinner";
+import  LoadingSpinner  from "../component/LoadingSpinner";
 import { cartActions } from "../action/cartAction";
 import { commonUiActions } from "../action/commonUiAction";
 import { currencyFormat } from "../utils/number";
@@ -43,18 +44,7 @@ const ProductDetail = () => {
 
   if (loading || !selectedProduct)
   return (
-    <div class="spinner-container">
-      <ColorRing
-        className='color-ring'
-        visible={true}
-        height="80"
-        width="80"
-        ariaLabel="blocks-loading"
-        wrapperStyle={{}}
-        wrapperClass="blocks-wrapper"
-        colors={["#e15b64", "#f47e60", "#f8b26a", "#abbd81", "#849b87"]}
-      />
-    </div>
+    <LoadingSpinner />
   );
 
   return (

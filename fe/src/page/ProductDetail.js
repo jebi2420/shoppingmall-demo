@@ -35,9 +35,9 @@ const ProductDetail = () => {
     if (!user) {
       dispatch(commonUiActions.showLinkModal("로그인 후 이용하실 수 있습니다. 로그인하시겠습니까?", "/login"));  
       setShowModal(true);
-      console.log("link", linkModal)
     }
     // 카트에 아이템 추가하기
+    dispatch(cartActions.addToCart({ id, size }));
   };
 
   const selectSize = (value) => {

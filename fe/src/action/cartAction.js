@@ -8,8 +8,12 @@ const addToCart =
     try{
       dispatch({type: types.ADD_TO_CART_REQUEST});
       const response = await api.post("/cart", {productId: id, size, pty: 1}); 
+      console.log("rrr", response)
       if(response.status !== 200) throw new Error (response.error);
-      dispatch({type:types.ADD_TO_CART_SUCCESS, payload: response.data}) // 백엔드 작업 후 작업
+      dispatch({
+        type:types.ADD_TO_CART_SUCCESS, 
+        payload: response.data.cartItemQty,
+      }) 
       dispatch(commonUiActions.showToastMessage("카트에 상품이 추가됐습니다", "success"));
     }catch(error){
       dispatch({type: types.ADD_TO_CART_FAIL, payload: error.error});

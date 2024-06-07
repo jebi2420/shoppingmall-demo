@@ -7,7 +7,8 @@ import {
 
 const initialState = {
   loading: false,
-  error:""
+  error:"",
+  cartItemQty: 0,
 };
 
 function cartReducer(state = initialState, action) {
@@ -16,7 +17,7 @@ function cartReducer(state = initialState, action) {
     case types.ADD_TO_CART_REQUEST:
       return{...state, loading: true}
     case types.ADD_TO_CART_SUCCESS:
-      return{...state} // 백엔드 작업후 작업
+      return{...state, cartItemQty: payload} 
     case types.ADD_TO_CART_FAIL:
       return{...state, loading: false, error: payload}
     default:

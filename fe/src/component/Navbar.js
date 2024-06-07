@@ -11,11 +11,10 @@ import { Link } from "react-router-dom";
 import { useSearchParams, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../action/userAction";
-import SearchBox from "../component/SearchBox";
 
 const Navbar = ({ user }) => {
   const dispatch = useDispatch();
-  const { cartItemCount } = useSelector((state) => state.cart);
+  const { cartItemQty } = useSelector((state) => state.cart);
   const isMobile = window.navigator.userAgent.indexOf("Mobile") !== -1;
   const [showSearchBox, setShowSearchBox] = useState(false);
   const [inputValue, setInputValue] = useState("");
@@ -124,14 +123,18 @@ const Navbar = ({ user }) => {
                 {!isMobile && <span style={{ cursor: "pointer" }}>로그인/회원가입</span>}
               </div>
             )}
+
+            {/* 쇼핑백 */}
             <div onClick={() => navigate("/cart")} className="nav-icon">
               <FontAwesomeIcon icon={faShoppingBag} />
               {!isMobile && (
                 <span style={{ cursor: "pointer" }}>{`쇼핑백(${
-                  cartItemCount || 0
+                  cartItemQty || 0
                 })`}</span>
               )}
             </div>
+
+            {/* 내 주문 */}
             <div
               onClick={() => navigate("/account/purchase")}
               className="nav-icon"

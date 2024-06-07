@@ -63,6 +63,7 @@ const Navbar = ({ user }) => {
   // 로그아웃
   const logout = () => {
     dispatch(userActions.logout());
+    navigate("/");
   };
   
   return (

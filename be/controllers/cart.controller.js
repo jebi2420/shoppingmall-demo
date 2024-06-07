@@ -34,4 +34,19 @@ cartController.addItemToCart = async (req, res) => {
     }
 }
 
+cartController.getCartList = async (req, res) => {
+    try{
+        const {userId} = req;
+        let cart = await Cart.findOne({userId});
+        if(!cart) throw new Error("카트가 비어있습니다");
+        res.status(200).json({
+            status: "success", 
+            data: cart
+        });
+
+    }catch(error){
+        res.status(400).json({status: "fail", error: error.message});
+    }
+}
+
 module.exports = cartController;

@@ -22,13 +22,13 @@ const CartProductCard = ({ item }) => {
       <Row>
         <Col md={2} xs={12}>
           <img
-            src="https://lp2.hm.com/hmgoepprod?set=quality%5B79%5D%2Csource%5B%2Fb3%2F10%2Fb310d46e8f33571ea44cc4facf3cd224a90ef3d4.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5B%5D%2Ctype%5BLOOKBOOK%5D%2Cres%5Bm%5D%2Chmver%5B1%5D&call=url[file:/product/main]"
+            src={item.productId.image}
             width={112}
           />
         </Col>
         <Col md={10} xs={12}>
           <div className="display-flex space-between">
-            <h3>리넨셔츠</h3>
+            <h4>{item.productId.name}</h4>
             <button className="trash-button">
               <FontAwesomeIcon
                 icon={faTrash}
@@ -39,10 +39,10 @@ const CartProductCard = ({ item }) => {
           </div>
 
           <div>
-            <strong>₩ 45,000</strong>
+            <strong>₩ {currencyFormat(item.productId.price)}</strong>
           </div>
-          <div>Size: Menu</div>
-          <div>Total: ₩ 45,000</div>
+          <div>Size: {item.size.toUpperCase()}</div>
+          <div>Total: ₩ {currencyFormat(item.productId.price * item.qty)}</div>
           <div>
             Quantity:
             <Form.Select

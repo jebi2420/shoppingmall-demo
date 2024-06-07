@@ -4,11 +4,11 @@ const showToastMessage = (message, status) => async (dispatch) => {
   dispatch({ type: types.SET_TOAST_MESSAGE, payload: { message, status } });
 };
 
-const showAlertModal = (message) => async (dispatch) => {
-  dispatch({ type: types.SET_ALERT_MODAL, payload: { message }});
+const showLinkModal = (message, link) => async (dispatch) => {
+  dispatch({ type: types.SET_LINK_MODAL, payload: { message, link }});
 }
 
 export const commonUiActions = {
   showToastMessage,
-  showAlertModal
+  showLinkModal
 };

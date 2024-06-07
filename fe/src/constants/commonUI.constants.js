@@ -1,2 +1,2 @@
 export const SET_TOAST_MESSAGE = "SET_TOAST_MESSAGE";
-export const SET_ALERT_MODAL = "SET_ALERT_MODAL";
+export const SET_LINK_MODAL = "SET_LINK_MODAL";

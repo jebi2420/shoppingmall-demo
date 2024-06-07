@@ -8,28 +8,42 @@ import  LoadingSpinner  from "../component/LoadingSpinner";
 import { cartActions } from "../action/cartAction";
 import { commonUiActions } from "../action/commonUiAction";
 import { currencyFormat } from "../utils/number";
+import LinkModal from '../component/LinkModal';
 import "../style/productDetail.style.css";
 
 const ProductDetail = () => {
   const dispatch = useDispatch();
   const { selectedProduct } = useSelector(state=>state.product);
   const loading = useSelector((state) => state.product.loading);
+  const { linkModal } = useSelector((state) => state.ui);
   const item = selectedProduct?.data;
   const [size, setSize] = useState("");
   const { id } = useParams();
+  const { user } = useSelector((state) => state.user);
   const [sizeError, setSizeError] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const navigate = useNavigate();
 
   const addItemToCart = () => {
     //사이즈를 아직 선택안했다면 에러
+    if(size === ""){
+      setSizeError(true);
+      return;
+    }
     // 아직 로그인을 안한유저라면 로그인페이지로
+    if (!user) {
+      dispatch(commonUiActions.showLinkModal("로그인 후 이용하실 수 있습니다. 로그인하시겠습니까?", "/login"));  
+      setShowModal(true);
+      console.log("link", linkModal)
+    }
     // 카트에 아이템 추가하기
   };
+
   const selectSize = (value) => {
     // 사이즈 추가하기
     setSize(value);
-    setSizeError(false);
+    if(sizeError)setSizeError(false);
   };
 
   //카트에러가 있으면 에러메세지 보여주기
@@ -44,11 +58,16 @@ const ProductDetail = () => {
 
   if (loading || !selectedProduct)
   return (
-    <LoadingSpinner />
+    <LoadingSpinner 
+    />
   );
 
   return (
     <Container className="product-detail-card">
+      <LinkModal 
+        showModal={showModal}
+        setShowModal={setShowModal}
+      />
       <Row>
         <Col sm={6}>
           <img

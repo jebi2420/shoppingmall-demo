@@ -28,7 +28,7 @@ const getCartList = () => async (dispatch) => {
     dispatch({type: types.GET_CART_LIST_SUCCESS, payload: response.data.data});
   }catch(error){
     dispatch({type: types.GET_CART_LIST_FAIL, payload: error.error});
-    dispatch(commonUiActions.showToastMessage(error.error, "error"));
+    // dispatch(commonUiActions.showToastMessage(error.error, "error"));
   }
 };
 const deleteCartItem = (id) => async (dispatch) => {};

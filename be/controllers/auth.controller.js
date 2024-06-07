@@ -34,7 +34,7 @@ authController.authenticate = async (req, res, next) => {
         if(!tokenString) throw new Error ("Token not found");
         const token = tokenString.replace("Bearer ", "");
         jwt.verify(token, JWT_SECRET_KEY, (error, payload)=>{
-            if(error) throw new Error("invalid token");
+            if(error) throw new Error("로그인 해주세요");
             req.userId = payload._id;
         });
         next();

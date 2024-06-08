@@ -13,8 +13,10 @@ const CartProductCard = ({ item }) => {
     //아이템 수량을 수정한다
   };
 
-  const deleteCart = (id) => {
+  const deleteCart = (id, size) => {
     //아이템을 지운다
+    dispatch(cartActions.deleteCartItem(id, size));
+    console.log("item", id, size)
   };
 
   return (
@@ -33,7 +35,7 @@ const CartProductCard = ({ item }) => {
               <FontAwesomeIcon
                 icon={faTrash}
                 width={24}
-                onClick={() => deleteCart("hard_code")}
+                onClick={() => deleteCart(item.productId._id,item.size)}
               />
             </button>
           </div>

@@ -57,7 +57,6 @@ const AdminProduct = () => {
   // < 아이템 삭제하기 >
   const deleteItem = (id, name) => {
     setSelectedId(id);
-    console.log("idd", selectedId)
     setSelectedName(name);
     setShowModal(true);
   };

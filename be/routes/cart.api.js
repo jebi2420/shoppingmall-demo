@@ -5,5 +5,5 @@ const cartController = require("../controllers/cart.controller");
 
 router.post("/", authController.authenticate, cartController.addItemToCart);
 router.get("/", authController.authenticate, cartController.getCartList);
-
+router.delete("/:id/:size", authController.authenticate, cartController.deleteCartList);
 module.exports = router;

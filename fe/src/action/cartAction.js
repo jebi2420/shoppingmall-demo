@@ -30,7 +30,20 @@ const getCartList = () => async (dispatch) => {
     dispatch({type: types.GET_CART_LIST_FAIL, payload: error.error});
   }
 };
-const deleteCartItem = (id) => async (dispatch) => {};
+
+const deleteCartItem = (id, size) => async (dispatch) => {
+  try{
+    dispatch({type: types.DELETE_CART_ITEM_REQUEST});
+    const response = await api.delete(`/cart/${id}/${size}`);
+    if(response.status !== 200) throw new Error (response.error);
+    dispatch({type: types.DELETE_CART_ITEM_SUCCESS, payload: response.data.data.length});
+    dispatch(commonUiActions.showToastMessage("상품 삭제 완료", "success"));
+    // 삭제 반영 위해 카트 목록 다시 가져오기
+    dispatch(cartActions.getCartList());
+  }catch(error){
+    dispatch({type: types.DELETE_CART_ITEM_FAIL, payload: error.error});
+  }
+};
 
 const updateQty = (id, value) => async (dispatch) => {};
 

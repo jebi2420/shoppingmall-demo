@@ -51,4 +51,23 @@ cartController.getCartList = async (req, res) => {
     }
 }
 
+cartController.deleteCartList = async (req, res) => {
+    try{
+        const {userId} = req;
+        const productId = req.params.id; 
+        const productSize = req.params.size; 
+
+        let cart = await Cart.findOne({userId}).populate({path: "items"});
+        cart.items = cart.items.filter((item)=>
+        !(item.productId.equals(productId) && item.size === productSize)
+        );
+
+        await cart.save();
+
+        res.status(200).json({status: "success", data: cart.items});
+    }catch(error){
+        res.status(400).json({status: "fail", error: error.message});
+    }
+}
+
 module.exports = cartController;

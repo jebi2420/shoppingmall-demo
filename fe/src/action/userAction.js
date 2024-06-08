@@ -3,6 +3,8 @@ import * as types from "../constants/user.constants";
 import { commonUiActions } from "./commonUiAction";
 import * as commonTypes from "../constants/commonUI.constants";
 import { useNavigate } from 'react-router';
+import { cartActions } from '../action/cartAction';
+
 // 토큰으로 로그인
 const loginWithToken = () => async (dispatch) => {
   try{
@@ -28,6 +30,7 @@ const loginWithEmail = ({email, password}) => async (dispatch) => {
     dispatch({type: types.LOGIN_SUCCESS, payload:response.data});
     const name = response.data.user.name;
     dispatch(commonUiActions.showToastMessage(`${name}님 환영합니다!`, "success"));
+    dispatch(cartActions.getCartQty());
   }catch(error){
     dispatch({type: types.LOGIN_FAIL, payload:error.error});
   }

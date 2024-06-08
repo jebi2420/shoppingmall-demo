@@ -29,7 +29,6 @@ const CartPage = () => {
   }, []);
 
   if (loading){
-    console.log("loading", loading)
     return (
       <LoadingSpinner />
     );

@@ -5,15 +5,18 @@ import { Container, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { cartActions } from "../action/cartAction";
 import { commonUiActions } from "../action/commonUiAction";
+import  LoadingSpinner  from "../component/LoadingSpinner";
 import CartProductCard from "../component/CartProductCard";
 import OrderReceipt from "../component/OrderReceipt";
 import "../style/cart.style.css";
+import * as types from "../constants/cart.constants";
 
 const CartPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.user);
   const { cartList, totalPrice } = useSelector((state) => state.cart);
+  const { loading } = useSelector((state) => state.cart);
 
   useEffect(() => {
     // 아직 로그인을 안한유저라면 로그인페이지로
@@ -25,8 +28,16 @@ const CartPage = () => {
     console.log("cart", cartList)
   }, []);
 
+  if (loading){
+    console.log("loading", loading)
+    return (
+      <LoadingSpinner />
+    );
+  }
+
   return (
     <Container>
+
       <Row>
         <Col xs={12} md={7}>
         { cartList.length > 0 ? (

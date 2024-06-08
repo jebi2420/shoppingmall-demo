@@ -4,14 +4,14 @@ import Modal from 'react-bootstrap/Modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { productActions } from "../action/productAction";
 
-const AlertModal = ({showModal, setShowModal, selectedId, selectedName}) => {
+const AlertModal = ({showModal, setShowModal, selectedId, selectedName, setSearchQuery}) => {
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShow(true);
 
   const handleDelete = () => {
-    dispatch(productActions.deleteProduct(selectedId));
+    dispatch(productActions.deleteProduct(selectedId, setSearchQuery));
     setShowModal(false);
   }
   return (

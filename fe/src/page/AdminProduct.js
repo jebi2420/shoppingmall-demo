@@ -132,6 +132,7 @@ const AdminProduct = () => {
         mode={mode}
         showDialog={showDialog}
         setShowDialog={setShowDialog}
+        setSearchQuery={setSearchQuery}
       />
 
       <AlertModal 
@@ -139,6 +140,7 @@ const AdminProduct = () => {
         setShowModal={setShowModal}
         selectedId={selectedId}
         selectedName={selectedName}
+        setSearchQuery={setSearchQuery}
       />
 
     </div>

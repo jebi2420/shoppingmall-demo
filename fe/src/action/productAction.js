@@ -32,7 +32,7 @@ const getProductDetail = (id) => async (dispatch) => {
 };
 
 // 상품 생성
-const createProduct = (formData, setShowDialog) => async (dispatch) => {
+const createProduct = (formData, setShowDialog, setSearchQuery) => async (dispatch) => {
   try{
     dispatch({type: types.PRODUCT_CREATE_REQUEST});
     const response = await api.post("/product", formData);
@@ -43,6 +43,7 @@ const createProduct = (formData, setShowDialog) => async (dispatch) => {
     setShowDialog(false);
     // 생성 반영 위해 다시 productList 전체 갖고 오기
     dispatch(getProductList({page:1, name:""}));
+    setSearchQuery({page:1, name:""})
   }catch(error){
     dispatch({type: types.PRODUCT_CREATE_FAIL, payload: error.error});
     // ToastMessage로도 에러를 보여주자
@@ -51,7 +52,7 @@ const createProduct = (formData, setShowDialog) => async (dispatch) => {
 };
 
 // 상품 삭제
-const deleteProduct = (id) => async (dispatch) => {
+const deleteProduct = (id, setSearchQuery) => async (dispatch) => {
   try{
     dispatch({type: types.PRODUCT_DELETE_REQUEST});
     const response = await api.put(`/product/delete/${id}`);
@@ -60,6 +61,7 @@ const deleteProduct = (id) => async (dispatch) => {
     dispatch(commonUiActions.showToastMessage("상품 삭제 완료", "success"));
     // 삭제 반영 위해 다시 productList 전체 갖고 오기
     dispatch(getProductList({page:1, name:""}));
+    setSearchQuery({page:1, name:""})
   }catch(error){
     dispatch({type: types.PRODUCT_DELETE_FAIL, payload: error.error});
     dispatch(commonUiActions.showToastMessage(error.error, "error"));
@@ -67,7 +69,7 @@ const deleteProduct = (id) => async (dispatch) => {
 };
 
 // 상품 수정
-const editProduct = (formData, id, setShowDialog) => async (dispatch) => {
+const editProduct = (formData, id, setShowDialog, setSearchQuery) => async (dispatch) => {
   try{
     dispatch({type: types.PRODUCT_EDIT_REQUEST});
     const response = await api.put(`/product/${id}`, formData);
@@ -77,6 +79,7 @@ const editProduct = (formData, id, setShowDialog) => async (dispatch) => {
     setShowDialog(false);
     // 수정 반영 위해 다시 productList 전체 갖고 오기
     dispatch(getProductList({page:1, name:""}));
+    setSearchQuery({page:1, name:""})
   }catch(error){
     dispatch({type: types.PRODUCT_EDIT_FAIL, payload: error.error});
     dispatch(commonUiActions.showToastMessage(error.error, "error"));

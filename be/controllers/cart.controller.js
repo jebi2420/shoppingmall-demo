@@ -70,4 +70,27 @@ cartController.deleteCartList = async (req, res) => {
     }
 }
 
+cartController.updateCartQty = async (req, res) => {
+    try{
+        const {userId} = req;
+        const productId = req.params.id; 
+        const productSize = req.params.size; 
+        const productValue = req.params.value;
+
+        let cart = await Cart.findOne({userId}).populate({path: "items"});
+
+        cart.items.forEach(item => {
+            if (item.productId.equals(productId) && item.size === productSize) {
+                item.qty = productValue;
+            }
+        });
+        
+        await cart.save();
+
+        res.status(200).json({status: "success", data: cart.items});
+    }catch(error){
+        res.status(400).json({status: "fail", error: error.message});
+    }
+}
+
 module.exports = cartController;

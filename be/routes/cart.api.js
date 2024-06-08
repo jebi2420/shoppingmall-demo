@@ -6,4 +6,5 @@ const cartController = require("../controllers/cart.controller");
 router.post("/", authController.authenticate, cartController.addItemToCart);
 router.get("/", authController.authenticate, cartController.getCartList);
 router.delete("/:id/:size", authController.authenticate, cartController.deleteCartList);
+router.put("/:id/:size/:value", authController.authenticate, cartController.updateCartQty);
 module.exports = router;

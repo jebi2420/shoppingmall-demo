@@ -45,7 +45,20 @@ const deleteCartItem = (id, size) => async (dispatch) => {
   }
 };
 
-const updateQty = (id, value) => async (dispatch) => {};
+const updateQty = (id, size, value) => async (dispatch) => {
+  try{
+    console.log("보내기",id, size, value)
+    dispatch({type: types.UPDATE_CART_QTY_REQUEST});
+    const response = await api.put(`/cart/${id}/${size}/${value}`);
+    console.log("rrr", response)
+    if(response.status !== 200) throw new Error (response.error);
+    dispatch({type: types.UPDATE_CART_QTY_SUCCESS});
+    // 수정 반영 위해 카트 목록 다시 가져오기
+    dispatch(cartActions.getCartList());
+  }catch(error){
+    dispatch({type: types.UPDATE_CART_QTY_FAIL, payload: error.error});
+  }
+};
 
 const getCartQty = () => async (dispatch) => {
   try{

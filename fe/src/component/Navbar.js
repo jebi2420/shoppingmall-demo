@@ -64,7 +64,7 @@ const Navbar = ({ user }) => {
   // 로그아웃
   const logout = () => {
     dispatch(userActions.logout());
-    dispatch({type: types.CLEAT_CART});
+    dispatch({type: types.CLEAR_CART});
     navigate("/");
   };
   

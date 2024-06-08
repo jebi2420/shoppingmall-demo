@@ -14,4 +14,4 @@ export const GET_CART_QTY_REQUEST = "GET_CART_QTY_REQUEST";
 export const GET_CART_QTY_SUCCESS = "GET_CART_QTY_SUCCESS";
 export const GET_CART_QTY_FAIL = "GET_CART_QTY_FAIL";
 // cart page 초기화
-export const CLEAT_CART = "CLEAT_CART";
+export const CLEAR_CART = "CLEAR_CART";

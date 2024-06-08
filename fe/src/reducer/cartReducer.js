@@ -25,8 +25,9 @@ function cartReducer(state = initialState, action) {
       return{...state, loading: false, error: "", cartList: payload,
               totalPrice: payload.reduce((total, item)=> (total += item.productId.price * item.qty),0)}
     case types.ADD_TO_CART_FAIL:
+    case types.GET_CART_LIST_FAIL:
       return{...state, loading: false, error: payload}
-    case types.CLEAT_CART:
+    case types.CLEAR_CART:
       return{...state, loading: false, error: "", cartItemQty: 0, cartList: [], totalPrice: 0}
     default:
       return state;

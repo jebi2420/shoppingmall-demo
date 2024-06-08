@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 import { useSearchParams, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../action/userAction";
+import * as types from "../constants/cart.constants";
 
 const Navbar = ({ user }) => {
   const dispatch = useDispatch();
@@ -63,6 +64,7 @@ const Navbar = ({ user }) => {
   // 로그아웃
   const logout = () => {
     dispatch(userActions.logout());
+    dispatch({type: types.CLEAT_CART});
     navigate("/");
   };
   

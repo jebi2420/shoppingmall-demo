@@ -12,6 +12,12 @@ const SearchBox = ({ searchQuery, setSearchQuery, placeholder, field }) => {
       setSearchQuery({ ...searchQuery, page: 1, [field]: event.target.value });
     }
   };
+
+  const handleFocus = () => {
+    // input에 마우스를 클릭했을 때 input 값을 초기화
+    setKeyword("");
+  };
+
   return (
     <div className="search-box">
       <FontAwesomeIcon icon={faSearch} />
@@ -19,6 +25,7 @@ const SearchBox = ({ searchQuery, setSearchQuery, placeholder, field }) => {
         type="text"
         placeholder={placeholder}
         onKeyPress={onCheckEnter}
+        onFocus={handleFocus}
         onChange={(event) => setKeyword(event.target.value)}
         value={keyword}
       />

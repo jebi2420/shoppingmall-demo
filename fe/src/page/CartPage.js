@@ -48,7 +48,7 @@ const CartPage = () => {
               <h2>카트가 비어있습니다.</h2>
               <div>상품을 담아주세요!</div>
             </div>
-        )};
+        )}
         </Col>
         <Col xs={12} md={5}>
           <OrderReceipt 

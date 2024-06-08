@@ -18,15 +18,11 @@ const CartPage = () => {
   const { cartList, totalPrice } = useSelector((state) => state.cart);
   const { loading } = useSelector((state) => state.cart);
 
+
   useEffect(() => {
-    // 아직 로그인을 안한유저라면 로그인페이지로
-    if (!user) {
-      navigate("/login");
-    }
     //카트리스트 불러오기
     dispatch(cartActions.getCartList());
-    console.log("cart", cartList)
-  }, []);
+  }, [dispatch]);
 
   if (loading){
     return (

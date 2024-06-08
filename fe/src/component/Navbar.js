@@ -133,7 +133,7 @@ const Navbar = ({ user }) => {
             )}
 
             {/* 쇼핑백 */}
-            <div onClick={() => navigate("/cart")} className="nav-icon">
+            <div onClick={() => navigate( user ? "/cart" : "/login")} className="nav-icon">
               <FontAwesomeIcon icon={faShoppingBag} />
               {!isMobile && (
                 <span style={{ cursor: "pointer" }}>{`쇼핑백(${

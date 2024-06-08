@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 import { useSearchParams, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../action/userAction";
+import { cartActions } from '../action/cartAction';
 import * as types from "../constants/cart.constants";
 
 const Navbar = ({ user }) => {
@@ -32,6 +33,10 @@ const Navbar = ({ user }) => {
   ];
   let [width, setWidth] = useState(0);
   let navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(cartActions.getCartQty());
+  },[]);
 
   useEffect(() => {
     // URL에 query parameter가 없는 경우에만 input 값을 초기화

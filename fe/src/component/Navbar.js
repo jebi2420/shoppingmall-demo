@@ -53,7 +53,7 @@ const Navbar = ({ user }) => {
       if (query === "") {
         return navigate("/");
       }
-      navigate(`?name=${query}`);
+      navigate(`/?name=${query}`);
     }
   };
 

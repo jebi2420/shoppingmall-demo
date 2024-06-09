@@ -14,10 +14,6 @@ const CartProductCard = ({ item }) => {
   const handleQtyChange = (id, size, value) => {
     //아이템 수량을 수정한다
     dispatch(cartActions.updateQty(id, size, value));
-    // console.log("cart", item)
-    // console.log("stock",item.qty) 
-    // console.log("productAvailable", item.productId.stock)
-    // console.log("avail",  productSize, productValue)
   };
 
   const deleteCart = (id, size) => {
@@ -65,7 +61,7 @@ const CartProductCard = ({ item }) => {
             <strong>₩ {currencyFormat(item.productId.price)}</strong>
           </div>
           <div>Size: {item.size.toUpperCase()}</div>
-          <div>Total: ₩ {currencyFormat(item.productId.price * item.qty)}</div>
+          <div>Total: ₩ {currencyFormat(item.productId.price * getAvailableStock(item.qty))}</div>
           <div>{Object.keys(item.productId.stock).map((size, index)=> {
             if(size === item.size && item.productId.stock[size] <= 5 && item.productId.stock[size] > 0){
               return(

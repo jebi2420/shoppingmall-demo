@@ -117,7 +117,10 @@ body{
   background-color:  white !important;
 }
 
-
+.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
 
 .drop-down{
   margin-top:20px;
@@ -128,12 +131,15 @@ body{
   justify-content: space-between;
 }
 
-.dropdown-item .sold-out {
+.sold-out{
   color: gray;
 }
 
-.dropdown-item .stock {
+.stock{
   color: red;
+}
+
+.dropdown-item  div {
   margin-right: 0;
 }
 

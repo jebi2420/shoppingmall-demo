@@ -9,6 +9,7 @@ import { commonUiActions } from '../action/commonUiAction';
 
 const CartProductCard = ({ item }) => {
   const dispatch = useDispatch();
+  const [disabled, setDisabled] = useState(false);
   let availableStock = 0;
 
   useEffect(() => {
@@ -17,6 +18,8 @@ const CartProductCard = ({ item }) => {
     Object.keys(item.productId.stock).map((stockSize)=> {
       if(stockSize === item.size){
         availableStock = item.productId.stock[stockSize];
+        console.log("가능한?",availableStock)
+        if(availableStock === 0) setDisabled(true); 
         if(availableStock < item.qty){
           dispatch(cartActions.updateQty(item.productId._id, item.size, availableStock));
         }
@@ -38,8 +41,9 @@ const CartProductCard = ({ item }) => {
     <div 
       className="product-card-cart"
     >
+    { disabled ? (       
       <Row>
-        <Col md={2} xs={12}>
+        <Col md={2} xs={12} className='disabled'>
           <img
             src={item.productId.image}
             width={112}
@@ -47,7 +51,7 @@ const CartProductCard = ({ item }) => {
         </Col>
         <Col md={10} xs={12}>
           <div className="display-flex space-between">
-            <h4>{item.productId.name}</h4>
+            <h4>{item.productId.name} {item.size.toUpperCase()} (품절)</h4>
             <button className="trash-button">
               <FontAwesomeIcon
                 icon={faTrash}
@@ -56,45 +60,68 @@ const CartProductCard = ({ item }) => {
               />
             </button>
           </div>
-
-          <div>
-            <strong>₩ {currencyFormat(item.productId.price)}</strong>
-          </div>
-          <div>Size: {item.size.toUpperCase()}</div>
-          <div>Total: ₩ {currencyFormat(item.productId.price * item.qty)}</div>
-          <div>{Object.keys(item.productId.stock).map((size, index)=> {
-            if(size === item.size && item.productId.stock[size] <= 5 && item.productId.stock[size] > 0){
-              return(
-                <div className='stock'>재고: {item.productId.stock[size]}</div>
-              );
-            }
-            return null
-          }
-          )} 
-          
-          </div>
-          <div>
-            Quantity:
-            <Form.Select
-              onChange={(event) => handleQtyChange(item.productId._id, item.size, event.target.value)}
-              required
-              defaultValue={item.qty}
-              className="qty-dropdown"
-            >
-              <option value={1}>1</option>
-              <option value={2}>2</option>
-              <option value={3}>3</option>
-              <option value={4}>4</option>
-              <option value={5}>5</option>
-              <option value={6}>6</option>
-              <option value={7}>7</option>
-              <option value={8}>8</option>
-              <option value={9}>9</option>
-              <option value={10}>10</option>
-            </Form.Select>
-          </div>
         </Col>
       </Row>
+    ) : (
+      <Row>
+      <Col md={2} xs={12}>
+        <img
+          src={item.productId.image}
+          width={112}
+        />
+      </Col>
+      <Col md={10} xs={12}>
+        <div className="display-flex space-between">
+          <h4>{item.productId.name}</h4>
+          <button className="trash-button">
+            <FontAwesomeIcon
+              icon={faTrash}
+              width={24}
+              onClick={() => deleteCart(item.productId._id, item.size)}
+            />
+          </button>
+        </div>
+
+        <div>
+          <strong>₩ {currencyFormat(item.productId.price)}</strong>
+        </div>
+        <div>Size: {item.size.toUpperCase()}</div>
+        <div>Total: ₩ {currencyFormat(item.productId.price * item.qty)}</div>
+        <div>{Object.keys(item.productId.stock).map((size, index)=> {
+          if(size === item.size && item.productId.stock[size] <= 5 && item.productId.stock[size] > 0){
+            return(
+              <div className='stock'>재고: {item.productId.stock[size]}</div>
+            )
+          }
+          return null
+        }
+        )} 
+        
+        </div>
+        <div>
+          Quantity:
+          <Form.Select
+            onChange={(event) => handleQtyChange(item.productId._id, item.size, event.target.value)}
+            required
+            defaultValue={item.qty}
+            className="qty-dropdown"
+          >
+            <option value={1}>1</option>
+            <option value={2}>2</option>
+            <option value={3}>3</option>
+            <option value={4}>4</option>
+            <option value={5}>5</option>
+            <option value={6}>6</option>
+            <option value={7}>7</option>
+            <option value={8}>8</option>
+            <option value={9}>9</option>
+            <option value={10}>10</option>
+          </Form.Select>
+        </div>
+      </Col>
+    </Row>
+    ) }
+     
     </div>
   );
 };

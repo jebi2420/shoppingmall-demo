@@ -52,11 +52,12 @@ const updateQty = (id, size, value) => async (dispatch) => {
     const response = await api.put(`/cart/${id}/${size}/${value}`);
     console.log("rrr", response)
     if(response.status !== 200) throw new Error (response.error);
-    dispatch({type: types.UPDATE_CART_QTY_SUCCESS});
+    dispatch({type: types.UPDATE_CART_QTY_SUCCESS, payload: response.availableStock});
     // 수정 반영 위해 카트 목록 다시 가져오기
     dispatch(cartActions.getCartList());
   }catch(error){
     dispatch({type: types.UPDATE_CART_QTY_FAIL, payload: error.error});
+    dispatch(commonUiActions.showToastMessage(error.error, "error"));
   }
 };
 

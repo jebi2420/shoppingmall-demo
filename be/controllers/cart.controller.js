@@ -1,4 +1,5 @@
 const Cart= require("../models/Cart");
+const Product = require('../models/Product');
 
 const cartController = {};
 
@@ -77,13 +78,28 @@ cartController.updateCartQty = async (req, res) => {
         const productSize = req.params.size; 
         const productValue = req.params.value;
 
-        let cart = await Cart.findOne({userId}).populate({path: "items"});
+        // Cart 찾기
+        let cart = await Cart.findOne({userId}).populate({path: "items.productId"});
+        if(!cart) throw new Error("카트를 찾을 수 없습니다")
 
+        // Product 찾기
+        const product = await Product.findById(productId);
+        if(!product) throw new Error("상품을 찾을 수 없습니다")
+
+        // 재고 확인
+        const availableStock = product.stock[productSize];
+        if(productValue > availableStock) throw new Error(`상품의 재고가 부족합니다. (재고:${availableStock})`)
+
+        // Cart 아이템의 수량 업데이트
+        let itemUpdated = false;
         cart.items.forEach(item => {
             if (item.productId.equals(productId) && item.size === productSize) {
                 item.qty = productValue;
+                itemUpdated = true;
             }
         });
+
+        if(!itemUpdated) throw new Error("카트 항목을 찾을 수 없습니다")
         
         await cart.save();
 

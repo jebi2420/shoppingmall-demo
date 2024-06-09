@@ -11,6 +11,7 @@ const initialState = {
   cartItemQty: 0,
   cartList: [],
   totalPrice: 0,
+  availableStock: 0
 };
 
 function cartReducer(state = initialState, action) {
@@ -30,7 +31,7 @@ function cartReducer(state = initialState, action) {
       return{...state, loading: false, error: "", cartList: payload,
       totalPrice: payload.reduce((total, item)=> (total += item.productId.price * item.qty),0)}
     case types.UPDATE_CART_QTY_SUCCESS:
-      return{...state, loading: false, error: ""}
+      return{...state, loading: false, error: "", availableStock: payload }
     case types.ADD_TO_CART_FAIL:
     case types.GET_CART_LIST_FAIL:
     case types.GET_CART_QTY_FAIL:

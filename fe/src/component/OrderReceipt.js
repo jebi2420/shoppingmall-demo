@@ -13,14 +13,18 @@ const OrderReceipt = ({ cartList, totalPrice }) => {
       <h3 className="receipt-title">주문 내역</h3>
       <ul className="receipt-list">
         {cartList.map(item => 
-          <li>
-            <div className="display-flex space-between">
-              <div>{item.productId.name}</div>
+          (item.productId.price * item.qty === 0) ? (
+            ""
+          ):(
+            <li>
+              <div className="display-flex space-between">
+                <div>{item.productId.name}</div>
 
-              <div>₩ {currencyFormat(item.productId.price * item.qty)}</div>
-            </div>
-          </li>
-          )}
+                <div>₩ {currencyFormat(item.productId.price * item.qty)}</div>
+              </div>
+            </li>
+          ))
+          }
       </ul>
       <div className="display-flex space-between receipt-title">
         <div>

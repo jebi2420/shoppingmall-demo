@@ -11,8 +11,21 @@ const CartProductCard = ({ item }) => {
   const dispatch = useDispatch();
   let availableStock = 0;
 
+  useEffect(() => {
+    // 재고의 양이 변한다. -> 재고의 양과 카트의 qty를 비교한다. 
+    // qty가 재고의 양보다 많다면 qty를 재고 수량으로 변경
+    Object.keys(item.productId.stock).map((stockSize)=> {
+      if(stockSize === item.size){
+        availableStock = item.productId.stock[stockSize];
+        if(availableStock < item.qty){
+          dispatch(cartActions.updateQty(item.productId._id, item.size, availableStock));
+        }
+      }
+    });
+  }, [item.productId.stock]);
+
+  //아이템 수량을 수정한다
   const handleQtyChange = (id, size, value) => {
-    //아이템 수량을 수정한다
     dispatch(cartActions.updateQty(id, size, value));
   };
 
@@ -20,19 +33,6 @@ const CartProductCard = ({ item }) => {
     //아이템을 지운다
     dispatch(cartActions.deleteCartItem(id, size));
   };
-
-  const getAvailableStock = (qty) => {
-    // 재고보다 담아둔 카트수량이 많으면 카트수량을 재고수량만큼 변경
-    Object.keys(item.productId.stock).map((size, index)=> {
-      if(size === item.size){
-        availableStock = item.productId.stock[size];
-      }
-    });
-    if(availableStock < qty) {
-      return availableStock;
-    }
-      return qty;
-  }
 
   return (
     <div 
@@ -61,7 +61,7 @@ const CartProductCard = ({ item }) => {
             <strong>₩ {currencyFormat(item.productId.price)}</strong>
           </div>
           <div>Size: {item.size.toUpperCase()}</div>
-          <div>Total: ₩ {currencyFormat(item.productId.price * getAvailableStock(item.qty))}</div>
+          <div>Total: ₩ {currencyFormat(item.productId.price * item.qty)}</div>
           <div>{Object.keys(item.productId.stock).map((size, index)=> {
             if(size === item.size && item.productId.stock[size] <= 5 && item.productId.stock[size] > 0){
               return(
@@ -78,7 +78,7 @@ const CartProductCard = ({ item }) => {
             <Form.Select
               onChange={(event) => handleQtyChange(item.productId._id, item.size, event.target.value)}
               required
-              defaultValue={getAvailableStock(item.qty)}
+              defaultValue={item.qty}
               className="qty-dropdown"
             >
               <option value={1}>1</option>

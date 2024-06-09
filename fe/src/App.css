@@ -123,13 +123,18 @@ body{
   margin-top:20px;
 }
 
-.dropdown-item{
+.dropdown-item > div{
   display: flex;
   justify-content: space-between;
 }
 
-.dropdown-item div{
+.dropdown-item .sold-out {
+  color: gray;
+}
+
+.dropdown-item .stock {
   color: red;
+  margin-right: 0;
 }
 
 .add-button{

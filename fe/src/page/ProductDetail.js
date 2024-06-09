@@ -99,9 +99,18 @@ const ProductDetail = () => {
               
               <Dropdown.Menu className="size-drop-down">
                 {item?.stock && Object.keys(item.stock).map((size, index)=>(
-                  <Dropdown.Item key={index} eventKey={size} className='dropdown-item'>
-                    {size.toUpperCase()}
-                    <div>{item.stock[size] <=5? `재고: ${item.stock[size]}` : "" }</div>
+                  <Dropdown.Item 
+                    key={index} 
+                    eventKey={size} 
+                    className='dropdown-item'
+                    disabled={item.stock[size] === 0}
+                  >
+                    
+                    {/* 재고가 0이면 선택 못하게, 카트에서 재고보다 많이 못담게 */}
+                    <div>
+                      {item.stock[size] === 0 ? (<>{size.toUpperCase()} <div className='sold-out'> 품절</div></>
+                       ) : item.stock[size] <= 5 ? (<>{size.toUpperCase()} <div className='stock'>재고: {item.stock[size]}</div></>) : ( size.toUpperCase())}
+                    </div>
                   </Dropdown.Item>
                 ))}              
               </Dropdown.Menu>

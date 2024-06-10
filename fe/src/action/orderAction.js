@@ -8,7 +8,9 @@ const createOrder = (payload) => async (dispatch) => {
     dispatch({type: types.CREATE_ORDER_REQUEST});
     const response = await api.post("/order", payload);
     if(response.status !== 200) throw new Error(response.error);
-    // dispatch({type: types.CREATE_ORDER_SUCCESS, payload: })
+    dispatch({type: types.CREATE_ORDER_SUCCESS, payload: response.data.orderNum});
+    // order 생성 후(cart 초기화 후), 쇼핑백 개수 업데이트
+    dispatch(cartActions.getCartQty());
   }catch(error){
     dispatch({type: types.CREATE_ORDER_FAIL, payload: error.error});
     dispatch(commonUiActions.showToastMessage(error.error, "error"));

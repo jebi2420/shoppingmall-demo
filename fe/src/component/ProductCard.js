@@ -5,6 +5,12 @@ import { Row, Col, Container } from "react-bootstrap";
 
 const ProductCard = ({item}) => {
   const navigate = useNavigate();
+  const stockValue = item?.stock ? Object.keys(item.stock).map((size) => (
+    item.stock[size]
+    )) : [];
+
+  const allZero = stockValue?.every((value) => value === 0);
+
   const showProduct = (id) => {
     console.log("id:", id)
     // 상품 디테일 페이지로 가기
@@ -18,7 +24,7 @@ const ProductCard = ({item}) => {
       />
       <div>{item?.name}</div>
       <div>₩ {currencyFormat(item?.price)}</div>
-      <div>{item.status === "disactive"?"품절": ""}</div>
+      <div>{item.status === "disactive" || allZero ?"품절": ""}</div>
     </div>
   );
 };

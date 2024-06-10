@@ -24,6 +24,13 @@ const ProductDetail = () => {
   const [showModal, setShowModal] = useState(false);
 
   const navigate = useNavigate();
+  
+  const stockValue = item?.stock ? Object.keys(item.stock).map((size) => (
+    item.stock[size]
+    )) : [];
+    console.log("stock",stockValue )
+
+  const allZero = stockValue?.every((value) => value === 0);
 
   const addItemToCart = () => {
     //사이즈를 아직 선택안했다면 에러
@@ -78,10 +85,10 @@ const ProductDetail = () => {
         </Col>
         <Col className="product-info-area" sm={6}>
           <div className="product-info">{item?.name}</div>
-          {item?.status === "active"? "" : <div>품절</div>}
+          {item?.status === "active" && !allZero  ? "" : <div>품절</div>}
           <div className="product-info">₩ {item?.price}</div>
           <div className="product-info">{item?.description}</div>
-          {item?.status === "active"? 
+          {item?.status === "active" && !allZero  ? 
             <Dropdown
               className="drop-down size-drop-down"
               title={size}
@@ -121,7 +128,7 @@ const ProductDetail = () => {
           <div className="warning-message">
             {sizeError && "사이즈를 선택해주세요."}
           </div>
-          {item?.status === "active"? 
+          {item?.status === "active" && !allZero ? 
             <Button variant="dark" className="add-button" onClick={addItemToCart}>
               추가
             </Button>

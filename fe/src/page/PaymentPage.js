@@ -30,7 +30,7 @@ const PaymentPage = () => {
     city: "",
     zip: "",
   });
-  const { cartList, totalPrice } = useSelector((state) => state.cart);
+  const { cartList, totalPrice, loading } = useSelector((state) => state.cart);
 
   //맨처음 페이지 로딩할때는 넘어가고  오더번호를 받으면 성공페이지로 넘어가기
 
@@ -61,6 +61,13 @@ const PaymentPage = () => {
     setCardValue({ ...cardValue, focus: e.target.name });
   };
   //카트에 아이템이 없다면 다시 카트페이지로 돌아가기 (결제할 아이템이 없으니 결제페이지로 가면 안됌)
+  useEffect(() => {
+    if (loading) return;
+    if (cartList.length === 0) {
+        navigate("/cart");
+      }
+  }, [cartList]);
+
   return (
     <Container>
       <Row>

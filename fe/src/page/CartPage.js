@@ -32,10 +32,12 @@ const CartPage = () => {
   //   );
   // }
 
-  if (!user) {
-    if (loading) return;
-    navigate("/login");
-  }
+  useEffect(() => {
+    if (!user) {
+      navigate("/login");
+    }
+  }, [])
+
 
   return (
     <Container>
@@ -44,7 +46,7 @@ const CartPage = () => {
         { cartList.length > 0 ? (
           <>
             <Col xs={12} md={7}>
-              {cartList.map((item, index) => (
+              {cartList.map((item) => (
                 <CartProductCard key={item._id} item={item}/>
               ))}
             </Col>

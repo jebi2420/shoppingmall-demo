@@ -31,7 +31,7 @@ const ProductAll = () => {
     <Container>
       <Row>
         {productList.length > 0 ? (
-          productList.map((item, index) => (
+          productList.map((item) => (
           <Col key={item._id} md={3} sm={12}>
             <ProductCard item={item}/>
           </Col>

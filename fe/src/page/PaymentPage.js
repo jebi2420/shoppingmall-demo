@@ -30,6 +30,7 @@ const PaymentPage = () => {
     city: "",
     zip: "",
   });
+  const { cartList, totalPrice } = useSelector((state) => state.cart);
 
   //맨처음 페이지 로딩할때는 넘어가고  오더번호를 받으면 성공페이지로 넘어가기
 
@@ -130,7 +131,10 @@ const PaymentPage = () => {
                   </Form.Group>
                 </Row>
                 <div className="mobile-receipt-area">
-                  {/* <OrderReceipt /> */}
+                  <OrderReceipt 
+                    cartList={cartList}
+                    totalPrice={totalPrice}
+                  />
                 </div>
                 <div>
                   <h2 className="payment-title">결제 정보</h2>
@@ -153,7 +157,10 @@ const PaymentPage = () => {
           </div>
         </Col>
         <Col lg={5} className="receipt-area">
-          {/* <OrderReceipt /> */}
+          <OrderReceipt 
+            cartList={cartList}
+            totalPrice={totalPrice}
+          />
         </Col>
       </Row>
     </Container>

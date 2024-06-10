@@ -1,6 +1,6 @@
 const productController = require('./product.controller');
 const Order = require('../models/Order');
-const { randomStringGenerator } = require("./product.controller");
+const { randomStringGenerator } = require("../utils/randomStringGenerator");
 
 const orderController = {};
 
@@ -27,7 +27,7 @@ orderController.createOrder = async (req, res) => {
             shipTo,
             contact, 
             items: orderList,
-            orderNum: randomStringGenerator
+            orderNum: randomStringGenerator()
         });
 
         await newOrder.save();

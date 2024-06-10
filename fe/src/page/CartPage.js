@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { cartActions } from "../action/cartAction";
 import { commonUiActions } from "../action/commonUiAction";
@@ -25,11 +25,11 @@ const CartPage = () => {
     dispatch(cartActions.getCartList());
   }, [dispatch]);
 
-  if (loading){
-    return (
-      <LoadingSpinner />
-    );
-  }
+  // if (loading){
+  //   return (
+  //     <LoadingSpinner />
+  //   );
+  // }
 
   if (!user) {
     if (loading) return;
@@ -40,24 +40,36 @@ const CartPage = () => {
     <Container>
 
       <Row>
-        <Col xs={12} md={7}>
         { cartList.length > 0 ? (
-          cartList.map((item, index) => (
-              <CartProductCard key={item._id} item={item}/>
-          ))
+          <>
+            <Col xs={12} md={7}>
+              {cartList.map((item, index) => (
+                <CartProductCard key={item._id} item={item}/>
+              ))}
+            </Col>
+            <Col xs={12} md={5}>
+              <OrderReceipt 
+                cartList={cartList} 
+                totalPrice={totalPrice} 
+              />
+            </Col>
+          </>
         ):(
+          <Col xs={12} md={7}>
             <div className="text-align-center empty-bag">
               <h2>카트가 비어있습니다.</h2>
               <div>상품을 담아주세요!</div>
+              <Button
+                variant="dark"
+                className="payment-button"
+                onClick={() => navigate("/")}
+              >
+                쇼핑 계속하기
+              </Button>
             </div>
+          </Col>
         )}
-        </Col>
-        <Col xs={12} md={5}>
-          <OrderReceipt 
-            cartList={cartList} 
-            totalPrice={totalPrice} 
-          />
-        </Col>
+
       </Row>
     </Container>
   );

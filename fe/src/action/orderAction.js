@@ -3,7 +3,7 @@ import * as types from "../constants/order.constants";
 import { cartActions } from "./cartAction";
 import { commonUiActions } from "./commonUiAction";
 
-const createOrder = (payload) => async (dispatch) => {
+const createOrder = (payload, navigate) => async (dispatch) => {
   try{
     dispatch({type: types.CREATE_ORDER_REQUEST});
     const response = await api.post("/order", payload);
@@ -11,6 +11,7 @@ const createOrder = (payload) => async (dispatch) => {
     dispatch({type: types.CREATE_ORDER_SUCCESS, payload: response.data.orderNum});
     // order 생성 후(cart 초기화 후), 쇼핑백 개수 업데이트
     dispatch(cartActions.getCartQty());
+    navigate("/payment/success")
   }catch(error){
     dispatch({type: types.CREATE_ORDER_FAIL, payload: error.error});
     dispatch(commonUiActions.showToastMessage(error.error, "error"));

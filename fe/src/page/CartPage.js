@@ -23,6 +23,7 @@ const CartPage = () => {
   useEffect(() => {
     //카트리스트 불러오기
     dispatch(cartActions.getCartList());
+    console.log("cart",cartList)
   }, [dispatch]);
 
   // if (loading){

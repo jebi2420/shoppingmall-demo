@@ -18,7 +18,6 @@ const CartProductCard = ({ item }) => {
     Object.keys(item.productId.stock).map((stockSize)=> {
       if(stockSize === item.size){
         availableStock = item.productId.stock[stockSize];
-        console.log("가능한?",availableStock)
         if(availableStock === 0) setDisabled(true); 
         if(availableStock < item.qty){
           dispatch(cartActions.updateQty(item.productId._id, item.size, availableStock));
@@ -88,9 +87,9 @@ const CartProductCard = ({ item }) => {
         <div>Size: {item.size.toUpperCase()}</div>
         <div>Total: ₩ {currencyFormat(item.productId.price * item.qty)}</div>
         <div>{Object.keys(item.productId.stock).map((size, index)=> {
-          if(size === item.size && item.productId.stock[size] <= 5 && item.productId.stock[size] > 0){
+          if(size === item.size && item.productId.stock[size] > -1 && item.productId.stock[size] > 0){
             return(
-              <div className='stock'>재고: {item.productId.stock[size]}</div>
+              <div key="index" className='stock'>재고: {item.productId.stock[size]}</div>
             )
           }
           return null

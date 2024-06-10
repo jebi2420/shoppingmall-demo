@@ -18,6 +18,7 @@ const CartPage = () => {
   const { cartList, totalPrice } = useSelector((state) => state.cart);
   const { loading } = useSelector((state) => state.cart);
 
+ 
 
   useEffect(() => {
     //카트리스트 불러오기
@@ -28,6 +29,11 @@ const CartPage = () => {
     return (
       <LoadingSpinner />
     );
+  }
+
+  if (!user) {
+    if (loading) return;
+    navigate("/login");
   }
 
   return (

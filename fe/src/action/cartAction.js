@@ -62,16 +62,28 @@ const updateQty = (id, size, value) => async (dispatch) => {
 };
 
 const getCartQty = () => async (dispatch) => {
-  try{
-    dispatch({type: types.GET_CART_QTY_REQUEST});
-    const response = await api.get("/cart");
-    console.log("length", response.data.data.length)
-    if(response.status !== 200) throw new Error (response.error);
-    dispatch({type: types.GET_CART_QTY_SUCCESS, payload: response.data.data.length});
-  }catch(error){
-    dispatch({type: types.GET_CART_QTY_FAIL, payload: error.error});
+  try {
+    dispatch({ type: types.GET_CART_QTY_REQUEST });
+    const response = await api.get("/cart/qty");
+    if (response.status !== 200) throw new Error(response.error);
+    dispatch({ type: types.GET_CART_QTY_SUCCESS, payload: response.data.qty });
+  } catch (error) {
+    dispatch({ type: types.GET_CART_QTY_FAIL, payload: error });
+    dispatch(commonUiActions.showToastMessage(error, "error"));
   }
 };
+
+// const getCartQty = () => async (dispatch) => {
+//   try{
+//     dispatch({type: types.GET_CART_QTY_REQUEST});
+//     const response = await api.get("/cart");
+//     console.log("length", response.data.data.length)
+//     if(response.status !== 200) throw new Error (response.error);
+//     dispatch({type: types.GET_CART_QTY_SUCCESS, payload: response.data.data.length});
+//   }catch(error){
+//     dispatch({type: types.GET_CART_QTY_FAIL, payload: error.error});
+//   }
+// };
 
 export const cartActions = {
   addToCart,

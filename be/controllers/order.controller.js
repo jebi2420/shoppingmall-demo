@@ -1,8 +1,10 @@
 const productController = require('./product.controller');
+const mongoose = require('mongoose');
 const Order = require('../models/Order');
 const { randomStringGenerator } = require("../utils/randomStringGenerator");
 
 const orderController = {};
+const PAGE_SIZE = 5;
 
 orderController.createOrder = async (req, res) => {
     try{
@@ -41,8 +43,14 @@ orderController.createOrder = async (req, res) => {
 
 orderController.getOrderList = async (req, res) => {
     try{
+        const {page, ordernum} = req.query;
         const { userId } = req;
-        const orderList = await Order.find({userId}).populate({
+        const cond = {
+            ...ordernum && { ordernum: { $regex: ordernum, $options: "i" } },
+            userId
+        };
+        
+        let query = Order.find(cond).populate({
             path: "items",
             populate: {
                 path: "productId",
@@ -52,8 +60,21 @@ orderController.getOrderList = async (req, res) => {
             path: "userId",
             model: "User"
         });
+        let response = { status: "success"};
+        if(page){
+            query.skip((page-1) * PAGE_SIZE).limit(PAGE_SIZE);
+            const totalItemNum = await Order.find(cond).count();
+            const totalPageNum = Math.ceil(totalItemNum / PAGE_SIZE);
+            response.totalPageNum = totalPageNum;
+        }
+        const orderList = await query.exec();
+        response.data = orderList;
+        if(orderList){
+            return res.status(200).json(response);
+        }
+        throw new Error("상품이 없거나 잘못되었습니다");
         // if(orderList.length === 0) throw new Error ("주문 리스트가 없습니다")
-        res.status(200).json({status: 'success', orderList: orderList});
+        // res.status(200).json({status: 'success', orderList: orderList});
 
     }catch(error){
         res.status(400).json({status: 'fail', error: error.message});

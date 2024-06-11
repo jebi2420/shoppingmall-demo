@@ -12,9 +12,9 @@ import { commonUiActions } from "../action/commonUiAction";
 
 const AdminOrderPage = () => {
   const navigate = useNavigate();
-  const [query, setQuery] = useSearchParams();
   const dispatch = useDispatch();
   const orderList = useSelector((state) => state.order.orderList);
+  const [query, setQuery] = useSearchParams();
   const [searchQuery, setSearchQuery] = useState({
     page: query.get("page") || 1,
     ordernum: query.get("ordernum") || "",
@@ -32,10 +32,14 @@ const AdminOrderPage = () => {
     "Status",
   ];
 
+  // < 리스트 가져오기 (url 쿼리 맞춰서) >
   useEffect(() => {
     dispatch(orderActions.getOrderList({ ...searchQuery }));
+    console.log("order", orderList, "page", totalPageNum)
+
   }, [query]);
 
+  // < 검색어나 페이지가 바뀌면 url바꿔주기 >
   useEffect(() => {
     if (searchQuery.ordernum === "") {
       delete searchQuery.ordernum;

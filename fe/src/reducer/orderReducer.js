@@ -4,7 +4,8 @@ const initialState = {
   loading: false,
   error: "",
   orderNum: "",
-  orderList: []
+  orderList: [],
+  totalPageNum: 1
 };
 
 function orderReducer(state = initialState, action) {
@@ -16,7 +17,10 @@ function orderReducer(state = initialState, action) {
     case types.CREATE_ORDER_SUCCESS:
       return{...state, loading: false, error: "", orderNum: payload};
     case types.GET_ORDER_LIST_SUCCESS:
-      return{...state, loading: false, error: "", orderList: payload };
+      return{...state, loading: false, error: "", 
+              orderList: payload.data,
+              totalPageNum: payload.totalPageNum
+            };
     case types.CREATE_ORDER_FAIL:
     case types.GET_ORDER_LIST_FAIL:
       return{ ...state, loading: false, error: payload };

@@ -2,6 +2,7 @@ import api from "../utils/api";
 import * as types from "../constants/order.constants";
 import { cartActions } from "./cartAction";
 import { commonUiActions } from "./commonUiAction";
+import { SortedOrderList } from '../utils/number';
 
 const createOrder = (payload, navigate) => async (dispatch) => {
   try{
@@ -20,12 +21,12 @@ const createOrder = (payload, navigate) => async (dispatch) => {
 
 const getOrder = () => async (dispatch) => {};
 
-const getOrderList = () => async (dispatch) => {
+const getOrderList = (query) => async (dispatch) => {
   try{
     dispatch({type: types.GET_ORDER_LIST_REQUEST});
-    const response = await api.get("/order");
+    const response = await api.get("/order", { params: {...query}});
     if(response.status !== 200) throw new Error(response.error);
-    dispatch({type: types.GET_ORDER_LIST_SUCCESS, payload: response.data.orderList});
+    dispatch({type: types.GET_ORDER_LIST_SUCCESS, payload: response.data});
 
   }catch(error){
     dispatch({type: types.GET_ORDER_LIST_FAIL, payload: error.error});

@@ -1,5 +1,4 @@
 const productController = require('./product.controller');
-const mongoose = require('mongoose');
 const Order = require('../models/Order');
 const { randomStringGenerator } = require("../utils/randomStringGenerator");
 
@@ -43,36 +42,33 @@ orderController.createOrder = async (req, res) => {
 
 orderController.getOrderList = async (req, res) => {
     try{
-        const {page, ordernum} = req.query;
         const { userId } = req;
-        const cond = {
-            ...ordernum && { ordernum: { $regex: ordernum, $options: "i" } },
-            userId
-        };
+        const {page, ordernum} = req.query;
+        let cond = {};
+        if(ordernum) {
+            cond = {
+                orderNum: { $regex: ordernum, $options: "i" },
+            };
+        }
         
-        let query = Order.find(cond).populate({
-            path: "items",
-            populate: {
-                path: "productId",
-                model: "Product"
-            }
-        }).populate({
-            path: "userId",
-            model: "User"
-        });
-        let response = { status: "success"};
-        if(page){
-            query.skip((page-1) * PAGE_SIZE).limit(PAGE_SIZE);
-            const totalItemNum = await Order.find(cond).count();
-            const totalPageNum = Math.ceil(totalItemNum / PAGE_SIZE);
-            response.totalPageNum = totalPageNum;
-        }
-        const orderList = await query.exec();
-        response.data = orderList;
-        if(orderList){
-            return res.status(200).json(response);
-        }
-        throw new Error("상품이 없거나 잘못되었습니다");
+				const orderList = await Order.find(cond)
+				.populate("userId")
+				.populate({
+					path: "items",
+					populate: {
+						path: "productId",
+						model: "Product",
+						select: "image name",
+					},
+				})
+				.skip((page - 1) * PAGE_SIZE)
+				.limit(PAGE_SIZE);
+
+				const totalItemNum = await Order.find(cond).count();
+				const totalPageNum = Math.ceil(totalItemNum / PAGE_SIZE);
+
+				res.status(200).json({ status: "success", data: orderList, totalPageNum });
+
         // if(orderList.length === 0) throw new Error ("주문 리스트가 없습니다")
         // res.status(200).json({status: 'success', orderList: orderList});
 

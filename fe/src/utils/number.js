@@ -43,8 +43,8 @@ export const formatTimestamp = (timestamp) => {
 }
 
 // 최신 순 정렬
-export const SortedOrderList = (list) => {
-  const sortedOrderList = list.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+export const SortByLatest = (list) => {
+  const LatestList = list.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
   
-  return sortedOrderList
+  return LatestList
 }

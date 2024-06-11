@@ -39,4 +39,15 @@ orderController.createOrder = async (req, res) => {
     }
 }
 
+orderController.getOrderList = async (req, res) => {
+    try{
+        const { userId } = req;
+        const orderList = await Order.find({userId});
+        res.status(200).json({status: 'success', orderList: orderList});
+
+    }catch(error){
+        res.status(400).json({status: 'fail', error: error.message});
+    }
+}
+
 module.exports = orderController;

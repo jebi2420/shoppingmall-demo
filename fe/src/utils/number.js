@@ -41,3 +41,10 @@ export const formatTimestamp = (timestamp) => {
 
   return `${year}.${month}.${day} (${hours}시 ${minutes}분)`;
 }
+
+// 최신 순 정렬
+export const SortedOrderList = (list) => {
+  const sortedOrderList = list.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  
+  return sortedOrderList
+}

@@ -82,7 +82,7 @@ orderController.updateOrder = async (req, res) => {
         const orderId = req.params.id;
         const { status } = req.body;
         const order = await Order.findByIdAndUpdate(
-            {_id: orderId},
+            orderId,
             {status},
             {new:true}
         );

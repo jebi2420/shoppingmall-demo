@@ -34,7 +34,22 @@ const getOrderList = (query) => async (dispatch) => {
   }
 };
 
-const updateOrder = (id, status) => async (dispatch) => {};
+const updateOrder = (id, status, setSearchQuery) => async (dispatch) => {
+  try{
+    dispatch({type: types.UPDATE_ORDER_REQUEST});
+    console.log("req", id, status)
+    const response = await api.put(`/order/${id}`, {status});
+    if(response.status !== 200) throw new Error(response.error);
+    dispatch({type: types.UPDATE_ORDER_SUCCESS});
+    dispatch(commonUiActions.showToastMessage("주문 수정 완료", "success"));
+     // 수정 반영 위해 다시 productList 전체 갖고 오기
+     dispatch(getOrderList({page:1, name:""}));
+     setSearchQuery({page:1, name:""})
+  }catch(error){
+    dispatch({type: types.UPDATE_ORDER_FAIL, payload: error.error});
+    dispatch(commonUiActions.showToastMessage(error.error, "error"));
+  }
+};
 
 export const orderActions = {
   createOrder,

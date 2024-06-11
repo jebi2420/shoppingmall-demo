@@ -48,6 +48,9 @@ orderController.getOrderList = async (req, res) => {
                 path: "productId",
                 model: "Product"
             }
+        }).populate({
+            path: "userId",
+            model: "User"
         });
         // if(orderList.length === 0) throw new Error ("주문 리스트가 없습니다")
         res.status(200).json({status: 'success', orderList: orderList});

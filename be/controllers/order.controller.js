@@ -77,4 +77,20 @@ orderController.getOrderList = async (req, res) => {
     }
 }
 
+orderController.updateOrder = async (req, res) => {
+    try{
+        const orderId = req.params.id;
+        const { status } = req.body;
+        const order = await Order.findByIdAndUpdate(
+            {_id: orderId},
+            {status},
+            {new:true}
+        );
+        if(!order) throw new Error("주문이 존재하지 않습니다");
+        res.status(200).json({status:"success", data: order});
+    }catch(error){
+        res.status(400).json({status: 'fail', error: error.message});
+    }
+}
+
 module.exports = orderController;

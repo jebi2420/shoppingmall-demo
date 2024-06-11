@@ -229,9 +229,7 @@ body{
   font-weight: bold;
   padding: 20px 10px;
   list-style-type: none;
-  
-
-  
+  cursor: pointer;
 }
 .sidebar-item:hover{
   color:white;

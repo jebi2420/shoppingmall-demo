@@ -62,6 +62,7 @@ const AdminOrderPage = () => {
   return (
     <div className="locate-center">
       <Container>
+        <h2>주문 관리 페이지</h2>
         <div className="mt-2 display-center mb-2">
           <SearchBox
             searchQuery={searchQuery}

@@ -86,6 +86,7 @@ const AdminProduct = () => {
   return (
     <div className="locate-center">
       <Container>
+        <h2>상품 관리 페이지</h2>
         <div className="mt-2">          
           <SearchBox
             searchQuery={searchQuery}

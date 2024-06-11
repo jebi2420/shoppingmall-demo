@@ -35,8 +35,10 @@ const Navbar = ({ user }) => {
   let navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(cartActions.getCartQty());
-  },[]);
+    if(user){
+      dispatch(cartActions.getCartQty());
+    }
+  },[user]);
 
   useEffect(() => {
     // URL에 query parameter가 없는 경우에만 input 값을 초기화

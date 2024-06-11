@@ -144,7 +144,7 @@ const Navbar = ({ user }) => {
 
             {/* 내 주문 */}
             <div
-              onClick={() => navigate("/account/purchase")}
+              onClick={() => navigate(user ? "/account/purchase" : "/login")}
               className="nav-icon"
             >
               <FontAwesomeIcon icon={faBox} />

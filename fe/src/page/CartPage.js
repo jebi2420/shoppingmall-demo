@@ -14,16 +14,13 @@ import * as types from "../constants/cart.constants";
 const CartPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { user } = useSelector((state) => state.user);
   const { cartList, totalPrice } = useSelector((state) => state.cart);
   const { loading } = useSelector((state) => state.cart);
 
- 
-
+  
   useEffect(() => {
     //카트리스트 불러오기
     dispatch(cartActions.getCartList());
-    console.log("cart",cartList)
   }, [dispatch]);
 
   // if (loading){
@@ -31,12 +28,6 @@ const CartPage = () => {
   //     <LoadingSpinner />
   //   );
   // }
-
-  useEffect(() => {
-    if (!user) {
-      navigate("/login");
-    }
-  }, [])
 
 
   return (

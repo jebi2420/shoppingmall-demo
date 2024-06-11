@@ -25,8 +25,7 @@ const getOrderList = () => async (dispatch) => {
     dispatch({type: types.GET_ORDER_LIST_REQUEST});
     const response = await api.get("/order");
     if(response.status !== 200) throw new Error(response.error);
-    console.log("rrr", response.data)
-    dispatch({type: types.GET_ORDER_LIST_SUCCESS, payload: response.data});
+    dispatch({type: types.GET_ORDER_LIST_SUCCESS, payload: response.data.orderList});
 
   }catch(error){
     dispatch({type: types.GET_ORDER_LIST_FAIL, payload: error.error});

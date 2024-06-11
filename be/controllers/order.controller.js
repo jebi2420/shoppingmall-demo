@@ -42,7 +42,14 @@ orderController.createOrder = async (req, res) => {
 orderController.getOrderList = async (req, res) => {
     try{
         const { userId } = req;
-        const orderList = await Order.find({userId});
+        const orderList = await Order.find({userId}).populate({
+            path: "items",
+            populate: {
+                path: "productId",
+                model: "Product"
+            }
+        });
+        // if(orderList.length === 0) throw new Error ("주문 리스트가 없습니다")
         res.status(200).json({status: 'success', orderList: orderList});
 
     }catch(error){

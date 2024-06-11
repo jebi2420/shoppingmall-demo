@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Container, Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { orderActions } from "../action/orderAction";
+import { SortByLatest } from "../utils/number";
 import  LoadingSpinner  from "../component/LoadingSpinner";
 import OrderStatusCard from "../component/OrderStatusCard";
 import "../style/orderStatus.style.css";
@@ -13,7 +14,7 @@ const MyPage = () => {
   const navigate = useNavigate();
   const { orderList } = useSelector((state) => state.order);
   const { loading } = useSelector((state) => state.order);
-
+  const latestOrderList = SortByLatest(orderList);
   
   //오더리스트 들고오기
   useEffect(()=>{
@@ -28,7 +29,7 @@ const MyPage = () => {
 
   return (
     <Container className="status-card-container">
-      {orderList.length === 0 ? (
+      {latestOrderList.length === 0 ? (
           <Col xs={12} md={7}>
             <div className="text-align-center empty-bag">
               <h2>주문한 상품이 없습니다</h2>
@@ -42,7 +43,7 @@ const MyPage = () => {
             </div>
           </Col>
       ):(
-        orderList.map((item)=>(
+        latestOrderList.map((item)=>(
           <OrderStatusCard key={item._id} item={item}/>  
         ))
       )}

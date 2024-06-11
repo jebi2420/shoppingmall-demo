@@ -54,7 +54,7 @@ const Sidebar = () => {
             className="sidebar"
             show={show}
           >
-            <Offcanvas.Header closeButton></Offcanvas.Header>
+            <Offcanvas.Header closeButton onClick={() => setShow(false)}></Offcanvas.Header>
             <Offcanvas.Body>{NavbarContent()}</Offcanvas.Body>
           </Navbar.Offcanvas>
         </Container>

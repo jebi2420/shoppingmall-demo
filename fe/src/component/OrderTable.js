@@ -17,7 +17,7 @@ const OrderTable = ({ header, data, openEditForm }) => {
         <tbody>
           {data.length > 0 ? (
             data.map((item, index) => (
-              <tr onClick={() => openEditForm(item)}>
+              <tr onClick={() => openEditForm(item)} className="order-table-item">
                 <th>{index}</th>
                 <th>{item.orderNum}</th>
                 {/* <th>{item.createdAt.slice(0, 10)}</th> */}

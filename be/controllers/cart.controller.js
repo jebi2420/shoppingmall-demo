@@ -45,7 +45,11 @@ cartController.getCartList = async (req, res) => {
                 model: "Product"
             }
         });
-        res.status(200).json({status: "success", data: cart.items});
+        if (!cart) {
+          res.status(200).json({ status: "noCart", data: ""})
+        }else{
+          res.status(200).json({status: "success", data: cart.items});
+        }
 
     }catch(error){
         res.status(400).json({status: "fail", error: error.message});
@@ -75,8 +79,11 @@ cartController.getCartQty = async (req, res) => {
     try {
       const { userId } = req;
       const cart = await Cart.findOne({ userId: userId });
-      if (!cart) throw new Error("There is no cart!");
-      res.status(200).json({ status: 200, qty: cart.items.length });
+      if (!cart) {
+        res.status(200).json({ status: "noCart", qty: 0 })
+      }else{
+        res.status(200).json({ status: "success", qty: cart.items.length });
+      }
     } catch (error) {
       return res.status(400).json({ status: "fail", error: error.message });
     }

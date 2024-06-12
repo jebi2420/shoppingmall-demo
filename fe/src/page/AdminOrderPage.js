@@ -35,8 +35,6 @@ const AdminOrderPage = () => {
   // < 리스트 가져오기 (url 쿼리 맞춰서) >
   useEffect(() => {
     dispatch(orderActions.getOrderList({ ...searchQuery }));
-    console.log("order", orderList, "page", totalPageNum)
-
   }, [query]);
 
   // < 검색어나 페이지가 바뀌면 url바꿔주기 >

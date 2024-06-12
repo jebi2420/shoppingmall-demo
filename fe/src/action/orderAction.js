@@ -49,7 +49,6 @@ const getOrderList = (query) => async (dispatch) => {
 const updateOrder = (id, status, setSearchQuery) => async (dispatch) => {
   try{
     dispatch({type: types.UPDATE_ORDER_REQUEST});
-    console.log("req", id, status)
     const response = await api.put(`/order/${id}`, {status});
     if(response.status !== 200) throw new Error(response.error);
     dispatch({type: types.UPDATE_ORDER_SUCCESS});

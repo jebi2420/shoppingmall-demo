@@ -28,7 +28,6 @@ const ProductDetail = () => {
   const stockValue = item?.stock ? Object.keys(item.stock).map((size) => (
     item.stock[size]
     )) : [];
-    console.log("stock",stockValue )
 
   const allZero = stockValue?.every((value) => value === 0);
 
@@ -60,7 +59,6 @@ const ProductDetail = () => {
   useEffect(() => {
     //상품 디테일 정보 가져오기
     dispatch(productActions.getProductDetail(id))
-    console.log("selected", item)
   }, [id]);
 
   if (loading || !selectedProduct)

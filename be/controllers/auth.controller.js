@@ -40,7 +40,6 @@ authController.loginWithGoogle = async(req, res) => {
             audience: GOOGLE_CLIENT_ID,
         });
         const { email, name } = ticket.getPayload();
-        console.log("eee", email, name);
         // 이미 로그인을 한 적이 있는 유저 ⇒ 로그인 시키고, 토큰 값 주면 됨
         let user = await User.findOne({email});
         if(!user){

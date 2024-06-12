@@ -12,7 +12,6 @@ const ProductCard = ({item}) => {
   const allZero = stockValue?.every((value) => value === 0);
 
   const showProduct = (id) => {
-    console.log("id:", id)
     // 상품 디테일 페이지로 가기
     navigate(`/product/${id}`)
   };

@@ -19,7 +19,6 @@ const MyPage = () => {
   //오더리스트 들고오기
   useEffect(()=>{
     dispatch(orderActions.getOrder());
-    console.log("order",orderList)
   },[dispatch]);
 
   if (loading){

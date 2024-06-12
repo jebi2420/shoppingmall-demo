@@ -16,7 +16,6 @@ const OrderDetailDialog = ({ open, handleClose, setSearchQuery }) => {
     setOrderStatus(event.target.value);
   };
   const submitStatus = () => {
-    console.log("selected", selectedOrder._id, orderStatus)
     dispatch(orderActions.updateOrder(selectedOrder._id, orderStatus, setSearchQuery));
     handleClose();
   };

@@ -52,6 +52,9 @@ const loginWithGoogle = (token) => async (dispatch) => {
     if(response.status !== 200) throw new Error (response.error);
     sessionStorage.setItem("token", response.data.token);
     dispatch({type: types.GOOGLE_LOGIN_SUCCESS, payload:response.data});
+    const name = response.data.user.name;
+    dispatch(commonUiActions.showToastMessage(`${name}님 환영합니다!`, "success"));
+    dispatch(cartActions.getCartQty());
   }catch(error){
     dispatch({ type:types.GOOGLE_LOGIN_FAIL, payload:error.error })
     dispatch(commonUiActions.showToastMessage(error.error, "error"));

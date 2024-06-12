@@ -44,7 +44,18 @@ const logout = () => async (dispatch) => {
   sessionStorage.removeItem("token");
 };
 
-const loginWithGoogle = (token) => async (dispatch) => {};
+// 구글 로그인
+const loginWithGoogle = (token) => async (dispatch) => {
+  try{
+    dispatch({type: types.GOOGLE_LOGIN_REQUEST});
+    const response = await api.post("/auth/google", {token});
+    if(response.status !== 200) throw new Error (response.error);
+    dispatch({type: types.GOOGLE_LOGIN_SUCCESS, payload:response.data});
+  }catch(error){
+    dispatch({ type:types.GOOGLE_LOGIN_FAIL, payload:error.error })
+    dispatch(commonUiActions.showToastMessage(error.error, "error"));
+  }
+};
 
 // 회원가입
 const registerUser =

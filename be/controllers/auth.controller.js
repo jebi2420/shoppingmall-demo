@@ -1,9 +1,10 @@
 const User = require('../models/User');
+const {OAuth2Client} = require('google-auth-library');
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
-const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY
-
+const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 
 const authController = {};
 
@@ -27,6 +28,44 @@ authController.loginWithEmail = async(req, res) => {
         res.status(400).json({status: "fail", error: error.message});
     }
 }
+
+// 구글로 로그인
+authController.loginWithGoogle = async(req, res) => {
+    try{
+        // 토큰 값을 읽어와서 유저 정보를 뽑아내기
+        const {token} = req.body
+        const googleClient = new OAuth2Client(GOOGLE_CLIENT_ID);
+        const ticket = await googleClient.verifyIdToken({
+            idToken: token,
+            audience: GOOGLE_CLIENT_ID,
+        });
+        const { email, name } = ticket.getPayload();
+        console.log("eee", email, name);
+        // 이미 로그인을 한 적이 있는 유저 ⇒ 로그인 시키고, 토큰 값 주면 됨
+        let user = await User.findOne({email});
+        if(!user){
+          // 유저를 새로 생성
+          const randomPassword = "" + Math.floor(Math.random()*100000000);
+          const salt = await bcrypt.genSalt(10);
+          const newPassword = await bcrypt.hash(randomPassword, salt);
+          user = new User({
+            name,
+            email,
+            password:newPassword
+          })
+          await user.save();
+        }
+        // 토큰 발행 리턴
+        const sessionToken = await user.generateToken();
+        res.status(200).json({ status: "success", user, token: sessionToken})
+
+    // 처음 로그인 시도를 한 유저 ⇒ 유저 정보 먼저 새로 생성 ⇒ 토큰 값
+    }catch(error){
+        res.status(400).json({status: "fail", error: error.message});
+    }
+}
+
+
 // 토큰이 valid한지 확인 (토큰으로 유저 찾아내기)
 authController.authenticate = async (req, res, next) => {
     try{
@@ -54,5 +93,6 @@ authController.checkAdminPermission = async (req, res, next) => {
         res.status(400).json({status: "fail", error: error.message});
     }
 }
+
 
 module.exports = authController;

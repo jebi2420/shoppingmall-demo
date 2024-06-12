@@ -18,7 +18,8 @@ const MyPage = () => {
   
   //오더리스트 들고오기
   useEffect(()=>{
-    dispatch(orderActions.getOrderList());
+    dispatch(orderActions.getOrder());
+    console.log("order",orderList)
   },[dispatch]);
 
   if (loading){
@@ -29,7 +30,7 @@ const MyPage = () => {
 
   return (
     <Container className="status-card-container">
-      {latestOrderList.length === 0 ? (
+      {latestOrderList.length === 0 || !latestOrderList ? (
           <Col xs={12} md={7}>
             <div className="text-align-center empty-bag">
               <h2>주문한 상품이 없습니다</h2>

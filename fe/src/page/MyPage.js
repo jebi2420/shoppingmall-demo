@@ -21,11 +21,6 @@ const MyPage = () => {
     dispatch(orderActions.getOrder());
   },[dispatch]);
 
-  if (loading){
-    return (
-      <LoadingSpinner />
-    );
-  }
 
   return (
     <Container className="status-card-container">

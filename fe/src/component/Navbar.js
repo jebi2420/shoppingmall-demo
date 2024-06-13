@@ -105,11 +105,14 @@ const Navbar = ({ user }) => {
           </div>
         </div>
       )}
+
       <div className="side-menu" style={{ width: width }}>
         <button className="closebtn" onClick={() => setWidth(0)}>
           &times;
         </button>
 
+
+        {/* menuList mobile */}
         <div className="side-menu-list" id="menu-list">
           {menuList.map((menu, index) => (
             <button onClick={()=>handleCategory(menu)} key={index}>{menu}</button>

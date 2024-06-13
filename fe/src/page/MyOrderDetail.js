@@ -99,12 +99,12 @@ const MyOrderDetail = () => {
 
               <section className="my-buyer">
                 <h3>구매자정보</h3>
-                <div>
-                  <div>
+                <div className='my-buyer-info'>
+                  <div className='buyer-info buyer-name'>
                     <div>주문자</div>
                     <div>{orderItem.userId.name}</div>
                   </div>
-                  <div>
+                  <div className='buyer-info buyer-email'>
                     <div>이메일</div>
                     <div>{orderItem.userId.email}</div>
                   </div>

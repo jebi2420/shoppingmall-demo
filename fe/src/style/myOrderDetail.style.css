@@ -1,0 +1,21 @@
+*{
+  list-style: none;
+}
+
+.myorder-detail-container h3{
+  padding-bottom: 10px;
+  border-bottom: 4px solid #000;
+}
+
+.myorder-detail-container section{
+  margin-top: 80px;
+  border-bottom: 1px solid #000;
+}
+
+.my-prodcut-item-list li{
+  cursor: pointer;
+}
+
+.my-prodcut-item-list li:hover{
+  background-color: antiquewhite;
+}

@@ -306,3 +306,7 @@ body{
 .order-table-item{
   cursor: pointer;
 }
+
+.status-card{
+  cursor: pointer;
+}

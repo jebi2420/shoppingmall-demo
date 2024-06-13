@@ -18,24 +18,17 @@ const MyOrderDetail = () => {
   const { selectedOrder } = useSelector((state) => state.order);
   const orderItem = selectedOrder?.data;
   const {id} = useParams();
-  const statusComponents = {
-    preparing: <div className='order-status preparing'>상품준비중</div>,
-    shipping: <div>배송중</div>,
-    delivered: <div>배송완료</div>,
-    refund: <div>환불처리</div>
-  };
-  const defaultComponent = "-";
   
   //오더리스트 들고오기
   useEffect(()=>{
     console.log("item", orderItem)
     dispatch(orderActions.getOrderDetail(id));
-  },[dispatch]);
+  },[dispatch, id]);
 
-  // status rederer
-  const renderStatusComponent = (status) => {
-    return statusComponents[status] || defaultComponent;
-  };
+  if (loading || !selectedOrder)
+  return (
+    <LoadingSpinner />
+  );
 
   return (
     <Container>
@@ -45,17 +38,40 @@ const MyOrderDetail = () => {
             <div className="myorder-detail-container">
               <section className="my-order">
                 <h3>주문상세내역</h3>
-                <ul>
-                  <li>주문일자 {formatTimestamp(orderItem.createdAt)}</li>
-                  <li>주문번호 {orderItem.orderNum}</li>
+                <ul className='order-info'>
+                  <li>주문일자 <strong>{formatTimestamp(orderItem.createdAt)}</strong></li>
+                  <li>주문번호 <strong>{orderItem.orderNum}</strong></li>
                 </ul>
-                {renderStatusComponent(orderItem.status)}
+                <ul className='status-group'>
+                  {orderItem.status === "refund" ? (
+                    <>
+                      <li className='status-refund'>
+                        <span>환불처리</span>
+                      </li>
+                    </>
+                  ):(
+                    <>
+                      <li className={orderItem.status === "preparing" ? "current-status" : ""}>
+                        <span>상품준비중</span>
+                      </li>
+                        <span>&gt;</span>
+                      <li className={orderItem.status === "shipping" ? "current-status" : ""}>
+                        <span>배송중</span>
+                      </li>
+                        <span>&gt;</span>
+                      <li className={orderItem.status === "delivered" ? "current-status" : ""}>
+                        <span>배송완료</span>
+                      </li>     
+                    </>              
+                  )}
+                </ul>
+
               </section>
               
               <section className="my-product">
                 <h3>주문상품정보</h3>
                 <ul className='my-prodcut-item-list'>               
-                    {orderItem.items.map((item)=>(
+                    {orderItem.items?.map((item)=>(
                         <li onClick={() => navigate(`/product/${item.productId._id}`)}>
                           <img
                             src={item.productId.image}

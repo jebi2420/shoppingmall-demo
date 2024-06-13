@@ -2,6 +2,10 @@
   list-style: none;
 }
 
+ul{
+  padding-left: 0;
+}
+
 .myorder-detail-container h3{
   padding-bottom: 10px;
   border-bottom: 4px solid #000;
@@ -18,4 +22,46 @@
 
 .my-prodcut-item-list li:hover{
   background-color: antiquewhite;
+}
+
+.my-order > ul {
+  display: flex;
+}
+
+
+.order-info > li {
+  margin-right: 20px;
+}
+
+.status-group{
+  display: flex;
+  align-items: center;
+}
+
+.status-group > span{
+  margin: 1em;
+}
+
+.status-group > li{
+  display: flex;
+  width: 7em;
+  height: 7em;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background: #f4f4f4;
+}
+
+.current-status{
+  background: #303033 !important;
+  color: #fff;
+  font-size: 1em;
+  font-weight: 700;
+}
+
+.status-refund{
+  background: #af3830 !important;
+  color: #fff;
+  font-size: 1em;
+  font-weight: 700;
 }

@@ -32,13 +32,13 @@ const ProductAll = () => {
     setExcludeOutOfStock(prevState => !prevState); // 이전 상태 값을 사용하여 토글
   };
 
-  // excludeOutOfStock이 true일 때 필터링된 productList 생성
+// excludeOutOfStock이 true일 때 필터링된 productList 생성
   const filteredProductList = excludeOutOfStock
-  ? productList.filter((item) => {
-      const stockValues = Object.values(item.stock);
-      return stockValues.some((value) => value > 0);
-    })
-  : productList;
+    ? productList.filter((item) => {
+        const stockValues = Object.values(item.stock);
+        return stockValues.some((value) => value > 0) && item.status === "active";
+      })
+    : productList;
 
 
   return (

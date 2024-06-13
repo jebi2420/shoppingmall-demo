@@ -123,7 +123,13 @@ orderController.getOrderDetail = async (req, res) => {
             model: "Product",
             select: "image name",
         },
+      })
+      .populate({
+        path: 'userId',
+        model: 'User',
+        select: 'name email', 
       });
+      
       if(!order) throw new Error("주문이 존재하지 않습니다");
       res.status(200).json({status:"success", data: order});
 

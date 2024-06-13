@@ -22,6 +22,8 @@ const Navbar = ({ user }) => {
   const [showSearchBox, setShowSearchBox] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const location = useLocation();
+  const [query, setQuery] = useSearchParams();
+  const name = query.get("name");
   const menuList = [
     "Top",
     "Pants",
@@ -63,6 +65,10 @@ const Navbar = ({ user }) => {
     // input에 마우스를 클릭했을 때 input 값을 초기화
     setInputValue("");
   };
+
+  const getAllProducts = () => {
+    dispatch(productActions.getProductList({name}));
+  }
 
   // 카테고리 별 상품 가져오기
   const handleCategory = (menu) =>{
@@ -164,7 +170,7 @@ const Navbar = ({ user }) => {
       </div>
 
       <div className="nav-logo">
-        <Link to="/">
+        <Link to="/" onClick={getAllProducts}>
           <img width={100} src="/image/hm-logo.png" alt="hm-logo.png" />
         </Link>
       </div>

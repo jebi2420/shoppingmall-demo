@@ -44,8 +44,7 @@ productController.getProducts = async (req, res)=>{
         const cond = {
             ...name && { name: { $regex: name, $options: "i" } },
             isDeleted: false,
-            ...(excludeOutOfStock === 'true' && { status: "active"}
-            )
+            // ...(excludeOutOfStock === 'true' && { status: "active"})
         };
 
         let query = Product.find(cond); // 선언

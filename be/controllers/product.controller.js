@@ -39,12 +39,15 @@ productController.createProduct = async (req, res) =>{
 // 상품 전체 리스트 가져오기
 productController.getProducts = async (req, res)=>{
     try{
-        const {page, name} = req.query;
+        const {page, name, excludeOutOfStock} = req.query;
         // const cond = name?{name:{$regex:name, $options:"i"}}:{}
         const cond = {
             ...name && { name: { $regex: name, $options: "i" } },
-            isDeleted: false
+            isDeleted: false,
+            ...(excludeOutOfStock === 'true' && { status: "active"}
+            )
         };
+
         let query = Product.find(cond); // 선언
         let response = { status: "success"};
         if(page){

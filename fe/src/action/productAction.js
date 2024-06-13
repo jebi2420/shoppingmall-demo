@@ -4,12 +4,13 @@ import { toast } from "react-toastify";
 import { commonUiActions } from "./commonUiAction";
 
 // 상품 리스트 가져오기
-const getProductList = (query) => async (dispatch) => {
+const getProductList = (query, excludeOutOfStock) => async (dispatch) => {
   try{
     dispatch({type: types.PRODUCT_GET_REQUEST});
     const response = await api.get("/product", {
-      params: {...query} //검색조건 함께 보내기
+      params: {...query}, excludeOutOfStock //검색조건 함께 보내기
     });
+    console.log("rrr", response.data)
     if(response.status !== 200) throw new Error(response.error);
     dispatch({type: types.PRODUCT_GET_SUCCESS, payload: response.data});
   }catch(error){

@@ -15,6 +15,7 @@ function productReducer(state = initialState, action) {
     case types.PRODUCT_EDIT_REQUEST:
     case types.PRODUCT_DELETE_REQUEST:
     case types.GET_PRODUCT_DETAIL_REQUEST:
+    case types.GET_PRODUCT_CATEGORY_REQUEST:
       return { ...state, loading: true };
     case types.PRODUCT_CREATE_SUCCESS:
     case types.PRODUCT_EDIT_SUCCESS:
@@ -27,11 +28,14 @@ function productReducer(state = initialState, action) {
               productList: payload.data,
               totalPageNum: payload.totalPageNum
             };
+    case types.GET_PRODUCT_CATEGORY_SUCCESS:
+      return {...state, loading: false, error: "", productList: payload.data}
     case types.PRODUCT_CREATE_FAIL:
     case types.PRODUCT_GET_FAIL:
     case types.PRODUCT_EDIT_FAIL:
     case types.PRODUCT_DELETE_FAIL:
     case types.GET_PRODUCT_DETAIL_FAIL:
+    case types.GET_PRODUCT_CATEGORY_FAIL:
       return { ...state, loading: false, error: payload};
     case types.SET_SELECTED_PRODUCT:
       return { ...state, selectedProduct: payload };

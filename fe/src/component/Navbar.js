@@ -12,6 +12,7 @@ import { useSearchParams, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../action/userAction";
 import { cartActions } from '../action/cartAction';
+import { productActions } from "../action/productAction";
 import * as types from "../constants/cart.constants";
 
 const Navbar = ({ user }) => {
@@ -63,8 +64,9 @@ const Navbar = ({ user }) => {
     setInputValue("");
   };
 
-  // 카테고리 menuList
+  // 카테고리 별 상품 가져오기
   const handleCategory = (menu) =>{
+    dispatch(productActions.getProductsByCategory(menu.toLowerCase()))
       console.log("menu",menu);
   }
 
@@ -170,7 +172,7 @@ const Navbar = ({ user }) => {
         <ul className="menu">
           {menuList.map((menu, index) => (
             <li key={index}>
-              <a href="#" onClick={()=>handleCategory(menu)}>{menu}</a>
+              <a onClick={()=>handleCategory(menu)}>{menu}</a>
             </li>
           ))}
         </ul>

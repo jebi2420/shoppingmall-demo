@@ -22,14 +22,9 @@ const Navbar = ({ user }) => {
   const [inputValue, setInputValue] = useState("");
   const location = useLocation();
   const menuList = [
-    "여성",
-    "Divided",
-    "남성",
-    "신생아/유아",
-    "아동",
-    "H&M HOME",
-    "Sale",
-    "지속가능성",
+    "Top",
+    "Pants",
+    "Dress",
   ];
   let [width, setWidth] = useState(0);
   let navigate = useNavigate();

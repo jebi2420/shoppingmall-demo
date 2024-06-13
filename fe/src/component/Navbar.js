@@ -63,6 +63,11 @@ const Navbar = ({ user }) => {
     setInputValue("");
   };
 
+  // 카테고리 menuList
+  const handleCategory = (menu) =>{
+      console.log("menu",menu);
+  }
+
   // 로그아웃
   const logout = () => {
     dispatch(userActions.logout());
@@ -99,7 +104,7 @@ const Navbar = ({ user }) => {
 
         <div className="side-menu-list" id="menu-list">
           {menuList.map((menu, index) => (
-            <button key={index}>{menu}</button>
+            <button onClick={()=>handleCategory(menu)} key={index}>{menu}</button>
           ))}
         </div>
       </div>
@@ -165,7 +170,7 @@ const Navbar = ({ user }) => {
         <ul className="menu">
           {menuList.map((menu, index) => (
             <li key={index}>
-              <a href="#">{menu}</a>
+              <a href="#" onClick={()=>handleCategory(menu)}>{menu}</a>
             </li>
           ))}
         </ul>

@@ -14,7 +14,7 @@ router.post("/",
 router.get("/", productController.getProducts);
 
 // 카테고리별 상품 보여주기
-router.get("/:category", productController.getProductsByCategory);
+router.get("/category/:category", productController.getProductsByCategory);
 
 // 상품 디테일 
 router.get("/:id", productController.getProductsDetail);

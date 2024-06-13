@@ -21,7 +21,7 @@ const getProductList = (query) => async (dispatch) => {
 const getProductsByCategory = (category) => async (dispatch) => {
   try{
     dispatch({type: types.GET_PRODUCT_CATEGORY_REQUEST});
-    const response = await api.get(`/product/${category}`);
+    const response = await api.get(`/product/category/${category}`);
     if(response.status !== 200) throw new Error(response.error);
     dispatch({type: types.GET_PRODUCT_CATEGORY_SUCCESS, payload: response.data});
   }catch(error){

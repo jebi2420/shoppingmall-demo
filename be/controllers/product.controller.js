@@ -5,6 +5,7 @@ const productController = {};
 
 const PAGE_SIZE = 5;
 
+// 상품 생성
 productController.createProduct = async (req, res) =>{
     try{
         const {sku, name, size, image, category, description, price, stock, status} = req.body;
@@ -35,6 +36,7 @@ productController.createProduct = async (req, res) =>{
     }
 }
 
+// 상품 전체 리스트 가져오기
 productController.getProducts = async (req, res)=>{
     try{
         const {page, name} = req.query;
@@ -65,6 +67,17 @@ productController.getProducts = async (req, res)=>{
     }
 }
 
+// 카테고리별 상품 가져오기
+productController.getProductsByCategory = async (req, res) => {
+    try{
+        const category = req.params.category;
+        const products = await Product.find({ category: category });
+        res.status(200).json({status:"success", data: products});
+    }catch{
+        res.status(400).json({status: "fail", error: error.message});
+    }
+}
+// 상품 디테일 가져오기
 productController.getProductsDetail = async (req, res) => {
     try{
         const productId = req.params.id; 
@@ -76,6 +89,7 @@ productController.getProductsDetail = async (req, res) => {
     }
 }
 
+// 상품 수정
 productController.updateProduct = async (req, res) => {
     try{
         const productId = req.params.id; 
@@ -101,6 +115,7 @@ productController.updateProduct = async (req, res) => {
     }
 }
 
+// 상품 삭제
 productController.deleteProduct = async (req, res) => {
     try{
         const productId = req.params.id; 
@@ -118,6 +133,7 @@ productController.deleteProduct = async (req, res) => {
         res.status(400).json({status: "fail", error: error.message});
     }
 }
+// 상품 재고 정보 
 productController.checkStock = async (item) => {
     // 내가 사려는 아이템 재고 정보 들고오기
     const product = await Product.findById(item.productId);
@@ -138,7 +154,7 @@ productController.checkStock = async (item) => {
     
     return {isVerify: true} // 통과
 }
-
+// 재고 불충분 아이템 리스트
 productController.checkItemListStock = async (itemList) => {
     const insufficientStockItems = []; // 재고가 불충분한 아이템을 저장할 예정
     // 재고 확인 로직

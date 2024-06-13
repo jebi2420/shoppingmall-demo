@@ -23,10 +23,16 @@ body{
   list-style-type: none;
   padding: 20px;
 }
+
 .menu li a{
   text-decoration: none;
   color:black;
   margin-left:20px;
+  cursor: pointer;
+}
+
+.menu li a:hover{
+  border-bottom: 3px solid #000;
 }
 
 .nav-logo{

@@ -3,11 +3,13 @@ import { Row, Col, Badge } from "react-bootstrap";
 import { badgeBg } from "../constants/order.constants";
 import { currencyFormat } from "../utils/number";
 import { formatTimestamp } from '../utils/number';
+import { useNavigate } from "react-router-dom";
 
 const OrderStatusCard = ({item}) => {
+  const navigate = useNavigate();
   return (
     <div>
-      <Row className="status-card">
+      <Row className="status-card" onClick={() => navigate(`/account/purchase/${item._id}`)}>
         <Col xs={2}>
           <img
             src={item.items[0].productId.image}

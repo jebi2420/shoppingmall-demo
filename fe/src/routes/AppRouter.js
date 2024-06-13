@@ -6,6 +6,7 @@ import CartPage from "../page/CartPage";
 import Login from "../page/Login";
 import MyPage from "../page/MyPage";
 import OrderCompletePage from "../page/OrderCompletePage";
+import MyOrderDetail from '../page/MyOrderDetail';
 import PaymentPage from "../page/PaymentPage";
 import ProductAll from "../page/ProductAll";
 import ProductDetail from "../page/ProductDetail";
@@ -24,6 +25,7 @@ const AppRouter = () => {
         <Route path="/payment" element={<PaymentPage />} />
         <Route path="/payment/success" element={<OrderCompletePage />} />
         <Route path="/account/purchase" element={<MyPage />} />
+        <Route path="/account/purchase/:id" element={<MyOrderDetail />} />
       </Route>
       <Route element={<PrivateRoute permissionLevel="admin" />}>
         <Route path="/admin/product" element={<AdminProduct />} />

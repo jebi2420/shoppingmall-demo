@@ -113,4 +113,23 @@ orderController.updateOrder = async (req, res) => {
     }
 }
 
+orderController.getOrderDetail = async (req, res) => {
+    try{
+      const orderId = req.params.id;
+      const order = await Order.findById(orderId).populate({
+        path: "items",
+        populate: {
+            path: "productId",
+            model: "Product",
+            select: "image name",
+        },
+      });
+      if(!order) throw new Error("주문이 존재하지 않습니다");
+      res.status(200).json({status:"success", data: order});
+
+    }catch(error){
+        res.status(400).json({status: 'fail', error: error.message});
+    }
+}
+
 module.exports = orderController;

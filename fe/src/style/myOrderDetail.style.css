@@ -1,9 +1,11 @@
 *{
   list-style: none;
+  margin: 0;
 }
 
 ul{
   padding-left: 0;
+  margin: 0;
 }
 
 .myorder-detail-container h3{
@@ -18,6 +20,12 @@ ul{
 
 .my-prodcut-item-list li{
   cursor: pointer;
+  border-bottom: 0.7px solid rgb(170, 170, 170);
+}
+
+.my-prodcut-item-list li:last-child{
+  cursor: pointer;
+  border-bottom: none;
 }
 
 .my-prodcut-item-list li:hover{
@@ -28,6 +36,9 @@ ul{
   display: flex;
 }
 
+.order-info{
+  padding-top: 20px;
+}
 
 .order-info > li {
   margin-right: 20px;
@@ -36,6 +47,7 @@ ul{
 .status-group{
   display: flex;
   align-items: center;
+  padding: 70px 0 20px 0;
 }
 
 .status-group > span{
@@ -62,6 +74,57 @@ ul{
 .status-refund{
   background: #af3830 !important;
   color: #fff;
+  font-size: 1em;
+  font-weight: 700;
+}
+
+.my-product-itme-header{
+  display: flex;
+  padding: 20px 0;
+  font-size: 1.1em;
+  font-weight: 700;
+  border-bottom: 1px solid rgb(0, 0, 0);
+}
+
+.my-product-itme-header > div{
+  display: flex;
+  justify-content: center;
+}
+
+.my-product-itme-header > div:first-child, .my-product-item > div:first-child{
+  width: 60%;
+}
+
+.my-product-itme-header > div:nth-child(2), .my-product-item > div:nth-child(2){
+  width: 20%;
+}
+
+.my-product-itme-header > div:nth-child(3), .my-product-item > div:nth-child(3){
+  width: 20%;
+}
+
+.my-product-item{
+  display: flex;
+  padding: 10px 0 10px 10px;
+}
+
+.my-product-item > div:first-child{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.my-product-item > div{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.product-info-left > img{
+  margin-right: 20px;
+}
+
+.product-name{
   font-size: 1em;
   font-weight: 700;
 }

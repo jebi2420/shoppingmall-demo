@@ -70,20 +70,30 @@ const MyOrderDetail = () => {
               
               <section className="my-product">
                 <h3>주문상품정보</h3>
-                <ul className='my-prodcut-item-list'>               
-                    {orderItem.items?.map((item)=>(
-                        <li onClick={() => navigate(`/product/${item.productId._id}`)}>
-                          <img
-                            src={item.productId.image}
-                            alt="orderImage"
-                            height={96}
-                          />
-                          <span>{item.productId.name}</span>
-                          <span>₩ {currencyFormat(item.price)}</span>
-                          <span>수량 {item.qty} 개</span>
-                        </li>
-                    ))
-                    }
+                <ul className='my-prodcut-item-list'>   
+                  <li className='my-product-itme-header'>
+                    <div>상품정보</div>
+                    <div>가격</div>
+                    <div>수량</div>
+                  </li>            
+                  {orderItem.items?.map((item)=>(
+                      <li className='my-product-item' key={item._id} onClick={() => navigate(`/product/${item.productId._id}`)}>
+                        <div>
+                          <div className='product-info-left'>
+                            <img
+                              src={item.productId.image}
+                              alt="orderImage"
+                              height={96}
+                            />
+                            <span className='product-name'>{item.productId.name}</span>
+                            <span> / 사이즈: {item.size.toUpperCase()}</span>
+                          </div>
+                        </div>
+                        <div>₩ {currencyFormat(item.price)}</div>
+                        <div>수량 {item.qty} 개</div>
+                      </li>
+                  ))
+                  }
                 </ul>
               </section>
 

@@ -121,17 +121,19 @@ const MyOrderDetail = () => {
 
               <section className='my-address'>
                 <h3>배송지정보</h3>
-                <div>
-                  <div>받는사람</div>
-                  <div>{orderItem.contact.lastName}{orderItem.contact.firstName}</div>
-                </div>
-                <div>
-                  <div>전화번호</div>
-                  <div>{orderItem.contact.contact}</div>
-                </div>
-                <div>
-                  <div>주소</div>
-                  <div>{orderItem.shipTo.address}</div>
+                <div className='address-item-group'>
+                  <div>
+                    <div>받는사람</div>
+                    <div>{orderItem.contact.lastName}{orderItem.contact.firstName}</div>
+                  </div>
+                  <div>
+                    <div>전화번호</div>
+                    <div>{orderItem.contact.contact}</div>
+                  </div>
+                  <div>
+                    <div>주소</div>
+                    <div>{orderItem.shipTo.address}</div>
+                  </div>
                 </div>
               </section>
             </div>

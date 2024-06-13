@@ -37,6 +37,7 @@ const getOrderDetail = (id) => async (dispatch) => {
   try{
     dispatch({type: types.GET_ORDER_DETAIL_REQUEST});
     const response = await api.get(`/order/me/${id}`);
+    console.log("rrr",response.data)
     if(response.status !== 200) throw new Error(response.error);
     dispatch({type: types.GET_ORDER_DETAIL_SUCCESS, payload: response.data});
   }catch(error){

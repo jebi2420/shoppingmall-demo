@@ -11,6 +11,7 @@ const CartProductCard = ({ item }) => {
   const dispatch = useDispatch();
   const [disabled, setDisabled] = useState(false);
   const [availableStock, setAvailableStock] = useState(0);
+  const [selectedQty, setSelectedQty] = useState(item.qty); // 선택된 수량 상태 추가
   // let availableStock = 0;
 
   useEffect(() => {
@@ -21,8 +22,9 @@ const CartProductCard = ({ item }) => {
         const stock = item.productId.stock[stockSize];
         setAvailableStock(stock);
         if(stock === 0) setDisabled(true); 
-        if(stock < item.qty){
+        if(stock < selectedQty){// 선택된 수량을 기준으로 비교
           dispatch(cartActions.updateQty(item.productId._id, item.size, stock));
+          setSelectedQty(stock); // 재고가 줄어들었으므로 선택된 수량 업데이트
         }
       }
     });
@@ -31,6 +33,7 @@ const CartProductCard = ({ item }) => {
   //아이템 수량을 수정한다
   const handleQtyChange = (id, size, value) => {
     dispatch(cartActions.updateQty(id, size, value));
+    setSelectedQty(value); // 선택된 수량 업데이트
   };
 
   const deleteCart = (id, size) => {
@@ -104,7 +107,7 @@ const CartProductCard = ({ item }) => {
           <Form.Select
             onChange={(event) => handleQtyChange(item.productId._id, item.size, event.target.value)}
             required
-            defaultValue={item.qty}
+            value={selectedQty} // 선택된 수량 상태를 value로 사용
             className="qty-dropdown"
           >
 

@@ -10,17 +10,19 @@ import { commonUiActions } from '../action/commonUiAction';
 const CartProductCard = ({ item }) => {
   const dispatch = useDispatch();
   const [disabled, setDisabled] = useState(false);
-  let availableStock = 0;
+  const [availableStock, setAvailableStock] = useState(0);
+  // let availableStock = 0;
 
   useEffect(() => {
     // 재고의 양이 변한다. -> 재고의 양과 카트의 qty를 비교한다. 
     // qty가 재고의 양보다 많다면 qty를 재고 수량으로 변경
     Object.keys(item.productId.stock).map((stockSize)=> {
       if(stockSize === item.size){
-        availableStock = item.productId.stock[stockSize];
-        if(availableStock === 0) setDisabled(true); 
-        if(availableStock < item.qty){
-          dispatch(cartActions.updateQty(item.productId._id, item.size, availableStock));
+        const stock = item.productId.stock[stockSize];
+        setAvailableStock(stock);
+        if(stock === 0) setDisabled(true); 
+        if(stock < item.qty){
+          dispatch(cartActions.updateQty(item.productId._id, item.size, stock));
         }
       }
     });
@@ -86,7 +88,7 @@ const CartProductCard = ({ item }) => {
         </div>
         <div>Size: {item.size.toUpperCase()}</div>
         <div>Total: ₩ {currencyFormat(item.productId.price * item.qty)}</div>
-        <div>{Object.keys(item.productId.stock).map((size, index)=> {
+        <div>{Object.keys(item.productId.stock).map((size)=> {
           if(size === item.size && item.productId.stock[size] > -1 && item.productId.stock[size] > 0){
             return(
               <div key="index" className='stock'>재고: {item.productId.stock[size]}</div>
@@ -105,7 +107,13 @@ const CartProductCard = ({ item }) => {
             defaultValue={item.qty}
             className="qty-dropdown"
           >
-            <option value={1}>1</option>
+
+            {[...Array(Math.min(availableStock, 10)).keys()].map((_, index) => (
+                <option key={index + 1} value={index + 1}>
+                  {index + 1}
+                </option>
+            ))}
+            {/* <option value={1}>1</option>
             <option value={2}>2</option>
             <option value={3}>3</option>
             <option value={4}>4</option>
@@ -114,7 +122,7 @@ const CartProductCard = ({ item }) => {
             <option value={7}>7</option>
             <option value={8}>8</option>
             <option value={9}>9</option>
-            <option value={10}>10</option>
+            <option value={10}>10</option> */}
           </Form.Select>
         </div>
       </Col>

@@ -72,8 +72,8 @@ const Navbar = ({ user }) => {
 
   // 카테고리 별 상품 가져오기
   const handleCategory = (menu) =>{
-    dispatch(productActions.getProductsByCategory(menu.toLowerCase()))
-      console.log("menu",menu);
+    const menuLowerCase = menu ? menu.toLowerCase() : null;
+    dispatch(productActions.getProductList({name}, menuLowerCase));
   }
 
   // 로그아웃

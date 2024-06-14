@@ -12,6 +12,7 @@ const ProductAll = () => {
   const dispatch = useDispatch();
   const error = useSelector((state) => state.product.error);
   const { productList } = useSelector(state=>state.product);
+  const { menu } = useSelector((state) => state.product);
   const loading = useSelector((state) => state.product.loading);
   const [query, setQuery] = useSearchParams();
   const name = query.get("name");
@@ -19,7 +20,8 @@ const ProductAll = () => {
 
   // 처음 로딩하면 상품리스트 불러오기
   useEffect(()=>{
-    dispatch(productActions.getProductList({name, excludeOutOfStock}));
+    const menuLowerCase = menu ? menu.toLowerCase() : '';
+    dispatch(productActions.getProductList({name}, menuLowerCase));
   },[query, excludeOutOfStock]);
 
   // if (loading || !productList)

@@ -39,12 +39,11 @@ productController.createProduct = async (req, res) =>{
 // 상품 전체 리스트 가져오기
 productController.getProducts = async (req, res)=>{
     try{
-        const {page, name, excludeOutOfStock} = req.query;
-        // const cond = name?{name:{$regex:name, $options:"i"}}:{}
+        const {page, name, menu} = req.query;
         const cond = {
             ...name && { name: { $regex: name, $options: "i" } },
             isDeleted: false,
-            // ...(excludeOutOfStock === 'true' && { status: "active"})
+            ...(menu && { category: menu.toLowerCase()}) // menu가 있는 경우만 카테고리별로 보여주기
         };
 
         let query = Product.find(cond); // 선언
@@ -60,6 +59,7 @@ productController.getProducts = async (req, res)=>{
         }
         const productList = await query.exec(); // 실행
         response.data = productList;
+        response.menu = menu;
         if(productList){
             return res.status(200).json(response);
         }
@@ -69,16 +69,6 @@ productController.getProducts = async (req, res)=>{
     }
 }
 
-// 카테고리별 상품 가져오기
-productController.getProductsByCategory = async (req, res) => {
-    try{
-        const category = req.params.category;
-        const products = await Product.find({ category: category });
-        res.status(200).json({status:"success", data: products});
-    }catch{
-        res.status(400).json({status: "fail", error: error.message});
-    }
-}
 // 상품 디테일 가져오기
 productController.getProductsDetail = async (req, res) => {
     try{

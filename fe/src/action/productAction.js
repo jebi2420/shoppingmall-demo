@@ -4,13 +4,14 @@ import { toast } from "react-toastify";
 import { commonUiActions } from "./commonUiAction";
 
 // 상품 리스트 가져오기
-const getProductList = (query, excludeOutOfStock) => async (dispatch) => {
+const getProductList = (query, menu) => async (dispatch) => {
   try{
     dispatch({type: types.PRODUCT_GET_REQUEST});
-    const response = await api.get("/product", {
-      params: {...query}, excludeOutOfStock //검색조건 함께 보내기
-    });
-    console.log("rrr", response.data)
+    const params = { ...query };
+    if (menu) {
+      params.menu = menu.toLowerCase();
+    }
+    const response = await api.get("/product", { params });
     if(response.status !== 200) throw new Error(response.error);
     dispatch({type: types.PRODUCT_GET_SUCCESS, payload: response.data});
   }catch(error){
@@ -18,18 +19,6 @@ const getProductList = (query, excludeOutOfStock) => async (dispatch) => {
     dispatch(commonUiActions.showToastMessage(error.error, "error"));
   }
 };
-
-const getProductsByCategory = (category) => async (dispatch) => {
-  try{
-    dispatch({type: types.GET_PRODUCT_CATEGORY_REQUEST});
-    const response = await api.get(`/product/category/${category}`);
-    if(response.status !== 200) throw new Error(response.error);
-    dispatch({type: types.GET_PRODUCT_CATEGORY_SUCCESS, payload: response.data});
-  }catch(error){
-    dispatch({type: types.GET_PRODUCT_CATEGORY_FAIL, payload: error.error});
-    dispatch(commonUiActions.showToastMessage(error.error, "error"));
-  }
-}
 
 // 상품 디테일 가져오기
 const getProductDetail = (id) => async (dispatch) => {
@@ -105,5 +94,4 @@ export const productActions = {
   deleteProduct,
   editProduct,
   getProductDetail,
-  getProductsByCategory
 };

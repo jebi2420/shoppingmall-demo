@@ -10,7 +10,7 @@ productController.createProduct = async (req, res) =>{
     try{
         const {sku, name, size, image, category, description, price, stock, status} = req.body;
         // 모든 필수 정보가 입력되었는지 확인
-        if (!sku || !name  || !image || !category || !description || !price || !stock || !status) {
+        if (!sku || !name || !image || !category || !description || !price || !stock || !status) {
             throw new Error("상품의 정보값을 모두 입력해주세요");
         }
         // sku 중복 방지
@@ -181,23 +181,35 @@ productController.checkItemListStock = async (itemList) => {
 }
 
 productController.deductItemStock = async (itemList) => {
-    try{
-        await Promise.all(
-          itemList.map(async (item) => {
-            const product = await Product.findById(item.productId);
-            if(!product){
-              throw new Error(
-                `ID에 해당하는 제품을 찾을 수 없습니다 : ${item.productId}`
-              );
-            }
-            product.stock[item.size] -= item.qty;
-            return product.save();
-          })
-        );
-    }catch(error){
-      throw new Error("제품 재고 업데이트에 실패했습니다.", error.message);  
-    }
-}
+  try {
+    await Promise.all(
+      itemList.map(async (item) => {
+        const product = await Product.findById(item.productId);
+        console.log("빼기전", product)
+        if (!product) {
+          throw new Error(
+            `ID에 해당하는 제품을 찾을 수 없습니다: ${item.productId}`
+          );
+        }
+        product.stock[item.size] -= item.qty;
+        console.log("뺸거", product)
+        // return product.save();
+        try {
+          // 저장 후의 결과를 로그로 확인
+          const savedProduct = await product.save();
+          console.log('Product saved successfully:', savedProduct);
+          return savedProduct;
+        } catch (error) {
+          console.error('Error saving product:', error);
+          throw new Error('제품 저장에 실패했습니다.');
+        }
+      })
+    );
+  } catch (error) {
+    console.error("Overall error during stock update:", error);
+    throw new Error("제품 재고 업데이트에 실패했습니다.");
+  }
+};
 
 
 module.exports = productController;

@@ -10,18 +10,23 @@ orderController.createOrder = async (req, res) => {
         // 프론트엔드에서 데이터 보낸거 받아오기
         const { userId } = req;
         const { shipTo, contact, totalPrice, orderList } = req.body;
-
-        // 재고 확인 & 재고 업데이트
+        // 재고가 부족한 아이템의 객체 배열
         const insufficientStockItems = await productController.checkItemListStock(orderList);
 
         // 재고가 충분하지 않는 아이템이 있었다 => 에러 
         if(insufficientStockItems.length > 0){
-             const errorMessage = 
-                insufficientStockItems.reduce((total, item) => (total += item.message), "")
-                throw new Error(errorMessage);
+            const errorMessage = insufficientStockItems
+              .map((item) => item.message)
+              .join(" ");
+
+            throw new Error(errorMessage);
         }
 
-        // order를 만들자
+        // 재고가 충분한 경우, 주문한 수량 만큼 재고를 감소시키기
+        await productController.deductItemStock(orderList);
+
+
+        // order를 만들기
         const newOrder = new Order ({
             userId,
             totalPrice,
@@ -32,7 +37,7 @@ orderController.createOrder = async (req, res) => {
         });
 
         await newOrder.save();
-        // save 후에 카트를 비워주자
+
         res.status(200).json({status: 'success', orderNum: newOrder.orderNum});
 
     }catch(error){

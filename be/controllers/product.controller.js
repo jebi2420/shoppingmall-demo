@@ -146,20 +146,58 @@ productController.checkStock = async (item) => {
     
     return {isVerify: true} // 통과
 }
-// 재고 불충분 아이템 리스트
+
 productController.checkItemListStock = async (itemList) => {
-    const insufficientStockItems = []; // 재고가 불충분한 아이템을 저장할 예정
-    // 재고 확인 로직
-    await Promise.all(
-        itemList.map(async (item)=>{
-            const stockCheck = await productController.checkStock(item);
-            if(!stockCheck.isVerify){
-                insufficientStockItems.push({item, message: stockCheck.message})
-            }
-            return stockCheck; // 의미 없는 return
-        })
-    )
-    return insufficientStockItems;
+    try{
+        // Product DB에서 _id가 item.ProductId와 일치하는 상품들을 배열 형태로 products에 저장
+        const products = await Product.find({
+            _id: { $in: itemList.map((item) => item.productId) },
+        });
+
+        // products 배열 -> productMap 객체 형태로 변환 : 빠른 데이터 조회를 위함
+        const productMap = products.reduce((map, product) => {
+            map[product._id] = product;
+            return map;
+        }, {});
+
+        const insufficientStockItems = itemList
+            // 주문한 수량 보다 재고가 모자란 item을 모은 새로운 배열 생성
+            .filter((item) => {
+                // product안에 item.productId를 키값으로 가진 상품 정보 담기
+                const product = productMap[item.productId];
+                return product.stock[item.size] < item.qty; // 재고가 부족한 경우 true를 반환하고 해당 item을 새로운 배열에 유지
+            })
+            // 재고가 부족한 item배열을 객체 배열로 매핑 (재고부족 아이템, 그에대한 메시지로 구성)
+            .map((item) => {
+                return {
+                    item,
+                    message: `${productMap[item.productId].name}의 ${item.size} 재고가 부족합니다`
+                }
+            });
+        return insufficientStockItems;
+    }catch(error){
+        throw new Error("재고 확인 중 오류가 발생했습니다.");
+    }
 }
+
+productController.deductItemStock = async (itemList) => {
+    try{
+        await Promise.all(
+          itemList.map(async (item) => {
+            const product = await Product.findById(item.productId);
+            if(!product){
+              throw new Error(
+                `ID에 해당하는 제품을 찾을 수 없습니다 : ${item.productId}`
+              );
+            }
+            product.stock[item.size] -= item.qty;
+            return product.save();
+          })
+        );
+    }catch(error){
+      throw new Error("제품 재고 업데이트에 실패했습니다.", error.message);  
+    }
+}
+
 
 module.exports = productController;

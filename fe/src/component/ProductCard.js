@@ -18,12 +18,16 @@ const ProductCard = ({item, excludeOutOfStock}) => {
   return (
       <div className="card" onClick={() => showProduct(item?._id)}>
         <img
+          className={item.status === "disactive" || allZero ? "soldout-img" : ""}
           src={item?.image}
           alt="product-image"
         />
         <div>{item?.name}</div>
         <div>₩ {currencyFormat(item?.price)}</div>
-        <div>{item.status === "disactive" || allZero ?"품절": ""}</div>
+
+        {item.status === "disactive" || allZero ?
+          (<div className='soldout-sticker'>품절</div>)
+          : ""}
       </div>
     )}  
 

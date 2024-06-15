@@ -4,8 +4,7 @@ import { Row, Col, Container } from "react-bootstrap";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { productActions } from "../action/productAction";
-import { commonUiActions } from "../action/commonUiAction";
-import  LoadingSpinner  from "../component/LoadingSpinner";
+import "../style/product.all.style.css";
 
 const ProductAll = () => {
   const navigate = useNavigate();
@@ -45,7 +44,6 @@ const ProductAll = () => {
 
   return (
     <Container>
-      <Row>
         {/* 품절상품 제외 */}
         <label>
           <input 
@@ -54,9 +52,10 @@ const ProductAll = () => {
             checked={excludeOutOfStock}
             onChange={handleCheckboxChange}
           />
-          품절상품 제외하기
+          &nbsp;품절상품 제외
         </label>
 
+      <Row className='products-row'>
         {filteredProductList.length > 0 ? (
           filteredProductList.map((item) => (
           <Col key={item._id} md={3} sm={12}>

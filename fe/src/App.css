@@ -31,6 +31,10 @@ body{
   cursor: pointer;
 }
 
+.menu li:first-child a{
+  margin-left: 0;
+}
+
 .menu li a:hover{
   border-bottom: 3px solid #000;
 }
@@ -309,10 +313,58 @@ body{
   margin-right: 20px;
 }
 
+.admin-btn{
+  padding: 6px 9px;
+  margin-right: 20px;
+  background: #000;
+  border-radius: 5px;
+}
+
+.admin-link{
+  margin: 0;
+  text-decoration: none;
+  color: #fff;
+}
+
+.admin-link:hover{
+  color: #fff;
+}
+
 .order-table-item{
   cursor: pointer;
 }
 
 .status-card{
   cursor: pointer;
+}
+.status-card:hover{
+  background: #f3ead6e3 !important;
+}
+
+.top-btn-container{
+  position: fixed;
+  right: 5%;
+  bottom: 5%;
+  z-index: 99;
+}
+.top-btn{
+  font-weight: bold;
+  font-size: 15px;
+  padding :15px 15px;
+  background-color: #000;
+  color:#fff;
+  border: 1px solid rgb(210, 204, 193);
+  border-radius: 50%;
+  outline: none;
+  cursor: pointer;
+}
+
+.mobile-search-box{
+  display: none;
+}
+
+@media only screen and (max-width: 48em) {
+  .search-box{
+    display: none;
+  }
 }

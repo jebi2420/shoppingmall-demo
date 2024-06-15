@@ -182,29 +182,29 @@ productController.checkItemListStock = async (itemList) => {
 
 productController.deductItemStock = async (itemList) => {
   try {
-    await Promise.all(
-      itemList.map(async (item) => {
+
+    for (const item of itemList) {
+        // db에서 주문한 product 찾기
         const product = await Product.findById(item.productId);
-        console.log("빼기전", product)
         if (!product) {
           throw new Error(
             `ID에 해당하는 제품을 찾을 수 없습니다: ${item.productId}`
           );
         }
-        product.stock[item.size] -= item.qty;
-        console.log("뺸거", product)
-        // return product.save();
+        // 재고에서 주문한 수량만큼 빼기
+        const newStock = { ...product.stock };
+        newStock[item.size] -= item.qty;
+        product.stock = newStock;
+
+        // 변경된 재고 저장
         try {
-          // 저장 후의 결과를 로그로 확인
           const savedProduct = await product.save();
           console.log('Product saved successfully:', savedProduct);
-          return savedProduct;
         } catch (error) {
           console.error('Error saving product:', error);
           throw new Error('제품 저장에 실패했습니다.');
         }
-      })
-    );
+      }
   } catch (error) {
     console.error("Overall error during stock update:", error);
     throw new Error("제품 재고 업데이트에 실패했습니다.");

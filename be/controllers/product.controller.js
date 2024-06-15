@@ -47,9 +47,11 @@ productController.getProducts = async (req, res)=>{
         };
 
         let query = Product.find(cond); // 선언
+        query.sort({ createdAt: -1 });
         let response = { status: "success"};
+
         if(page){
-            query.skip((page-1) * PAGE_SIZE).limit(PAGE_SIZE);
+            query.sort({ createdAt: -1 }).skip((page-1) * PAGE_SIZE).limit(PAGE_SIZE);
             // 최종 몇개 페이지
             // 데이터가 총 몇개 있는지
             const totalItemNum = await Product.find(cond).count();

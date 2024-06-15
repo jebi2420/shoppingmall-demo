@@ -60,7 +60,7 @@ orderController.getOrder = async (req, res) => {
                 select: "image name",
             },
         })
-        .sort({ createdAt: -1 }) // 최신순으로 정렬합니다
+        .sort({ createdAt: -1 }) // 최신순으로 정렬
         .skip((page - 1) * PAGE_SIZE)
         .limit(PAGE_SIZE);
 
@@ -95,6 +95,7 @@ orderController.getOrderList = async (req, res) => {
                 select: "image name",
             },
         })
+        .sort({ createdAt: -1 })
         .skip((page - 1) * PAGE_SIZE)
         .limit(PAGE_SIZE);
 

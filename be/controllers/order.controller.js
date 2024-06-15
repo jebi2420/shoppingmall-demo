@@ -49,6 +49,9 @@ orderController.createOrder = async (req, res) => {
 orderController.getOrder = async (req, res) => {
     try{
         const { userId } = req;
+        const {page} = req.query;
+        console.log("page", page)
+        const PAGE_SIZE = 20;
 
         const orderList = await Order.find({userId}).populate({
             path:"items",
@@ -57,8 +60,11 @@ orderController.getOrder = async (req, res) => {
                 model: "Product",
                 select: "image name",
             },
-        });
-        const totalItemNum = await Order.find({userId}).count();
+        })
+        .skip((page - 1) * PAGE_SIZE)
+        .limit(PAGE_SIZE);
+
+        const totalItemNum = await Order.find({userId}).countDocuments();
         const totalPageNum = Math.ceil(totalItemNum / PAGE_SIZE);
 
         res.status(200).json({ status: "success", data: orderList, totalPageNum});

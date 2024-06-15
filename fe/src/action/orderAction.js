@@ -20,10 +20,13 @@ const createOrder = (payload, navigate) => async (dispatch) => {
 };
 
 // 나의 order 리스트 가져오기
-const getOrder = () => async (dispatch) => {
+const getOrder = (query) => async (dispatch) => {
   try{
     dispatch({type: types.GET_ORDER_REQUEST});
-    const response = await api.get("/order/me");
+    const params = { ...query };
+    console.log("params", params)
+    const response = await api.get("/order/me", { params });
+    console.log("rrr", response.data)
     if(response.status !== 200) throw new Error(response.error);
     dispatch({type: types.GET_ORDER_SUCCESS, payload: response.data});
   }catch(error){

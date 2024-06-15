@@ -8,7 +8,7 @@ import OrderTable from "../component/OrderTable";
 import * as types from "../constants/order.constants";
 import ReactPaginate from "react-paginate";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { commonUiActions } from "../action/commonUiAction";
+import "../style/adminOrder.style.css";
 
 const AdminOrderPage = () => {
   const navigate = useNavigate();
@@ -64,7 +64,7 @@ const AdminOrderPage = () => {
   return (
     <div className="locate-center">
       <Container>
-        <h2>주문 관리 페이지</h2>
+        <h2 className='admin-page-title'>주문 관리 페이지</h2>
         <div className="mt-2 display-center mb-2">
           <SearchBox
             searchQuery={searchQuery}

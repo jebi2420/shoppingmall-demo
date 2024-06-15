@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Offcanvas, Navbar, Container } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
+import "../style/adminOrder.style.css";
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -17,7 +18,11 @@ const Sidebar = () => {
         <Link to="/">
           <img width={100} src="/image/hm-logo.png" alt="hm-logo.png" />
         </Link>
-        <div>Admin Account</div>
+        <div class="admin-btn">
+          <Link to="/admin/product?page=1" className="admin-link link-area">
+            Admin page
+          </Link>
+        </div>
         <ul className="sidebar-area">
           <li
             className="sidebar-item"

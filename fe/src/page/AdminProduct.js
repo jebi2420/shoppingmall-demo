@@ -7,9 +7,9 @@ import NewItemDialog from "../component/NewItemDialog";
 import * as types from "../constants/product.constants";
 import ReactPaginate from "react-paginate";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { commonUiActions } from "../action/commonUiAction";
 import ProductTable from "../component/ProductTable";
 import AlertModal from '../component/AlertModal';
+import "../style/adminOrder.style.css";
 
 const AdminProduct = () => {
   const navigate = useNavigate();
@@ -86,7 +86,7 @@ const AdminProduct = () => {
   return (
     <div className="locate-center">
       <Container>
-        <h2>상품 관리 페이지</h2>
+        <h2 className='admin-page-title'>상품 관리 페이지</h2>
         <div className="mt-2">          
           <SearchBox
             searchQuery={searchQuery}

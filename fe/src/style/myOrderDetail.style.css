@@ -132,6 +132,11 @@ h1,h2,h3,h4,h5{
   align-items: center;
 }
 
+.product-info-left{
+  display: flex;
+  align-items: center;
+}
+
 .product-info-left > img{
   margin-right: 20px;
 }
@@ -202,4 +207,54 @@ h1,h2,h3,h4,h5{
   padding: 10px 10px 10px 25px;
   font-size: 1.1em;
   font-weight: 700;
+}
+
+@media only screen and (max-width: 48em) {
+  .my-order .order-info {
+    font-size: 14px;
+  }
+
+  .order-info{
+    flex-flow: column;
+  }
+
+  .status-group > li {
+    width: 5em;
+    height: 5em;
+  }
+
+  .status-group > li > span {
+    font-size: 12px;
+  }
+
+  .my-product-item  span {
+    font-size: 13px;
+  }
+
+  .name-size-group{
+    display: flex;
+    flex-flow: column;
+    margin-right: 15px;
+  }
+
+  .my-product-item > div {
+    font-size: 14px;
+  }
+
+  .my-buyer-info div{
+    font-size: 14px;
+  }
+
+  .my-payment > div > div {
+    width: 27%;
+    font-size: 14px;
+  }
+
+  .address-item-group div{
+    font-size: 14px;
+  }
+
+  .address-item-group > div > div:first-child{
+    width: 27%;
+  }
 }

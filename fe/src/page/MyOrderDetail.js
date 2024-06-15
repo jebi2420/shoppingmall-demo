@@ -21,7 +21,6 @@ const MyOrderDetail = () => {
   
   //오더리스트 들고오기
   useEffect(()=>{
-    console.log("item", orderItem)
     dispatch(orderActions.getOrderDetail(id));
   },[dispatch, id]);
 
@@ -85,8 +84,10 @@ const MyOrderDetail = () => {
                               alt="orderImage"
                               height={96}
                             />
-                            <span className='product-name'>{item.productId.name}</span>
-                            <span> / 사이즈: {item.size.toUpperCase()}</span>
+                            <div class="name-size-group">
+                              <span className='product-name'>{item.productId.name}</span>
+                              <span> / 사이즈: {item.size.toUpperCase()}</span>
+                            </div>
                           </div>
                         </div>
                         <div>₩ {currencyFormat(item.price)}</div>

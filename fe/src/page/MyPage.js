@@ -15,7 +15,7 @@ const MyPage = () => {
   const navigate = useNavigate();
   const { orderList, totalPageNum } = useSelector((state) => state.order);
   const { loading } = useSelector((state) => state.order);
-  const latestOrderList = SortByLatest(orderList);
+  // const latestOrderList = SortByLatest(orderList);
   const [query, setQuery] = useSearchParams();
   const [searchQuery, setSearchQuery] = useState({
     page: query.get("page") || 1
@@ -46,7 +46,7 @@ const MyPage = () => {
 
   return (
     <Container className="status-card-container">
-      {latestOrderList.length === 0 || !latestOrderList ? (
+      {orderList.length === 0 || !orderList ? (
           <Col xs={12} md={7}>
             <div className="text-align-center empty-bag">
               <h2>주문한 상품이 없습니다</h2>
@@ -61,7 +61,7 @@ const MyPage = () => {
           </Col>
       ):(
         <>
-          {latestOrderList.map((item)=>(
+          {orderList.map((item)=>(
             <OrderStatusCard key={item._id} item={item}/>  
           ))}
           <ReactPaginate

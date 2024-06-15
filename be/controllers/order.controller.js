@@ -50,7 +50,6 @@ orderController.getOrder = async (req, res) => {
     try{
         const { userId } = req;
         const {page} = req.query;
-        console.log("page", page)
         const PAGE_SIZE = 20;
 
         const orderList = await Order.find({userId}).populate({
@@ -61,6 +60,7 @@ orderController.getOrder = async (req, res) => {
                 select: "image name",
             },
         })
+        .sort({ createdAt: -1 }) // 최신순으로 정렬합니다
         .skip((page - 1) * PAGE_SIZE)
         .limit(PAGE_SIZE);
 

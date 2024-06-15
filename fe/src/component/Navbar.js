@@ -25,6 +25,7 @@ const Navbar = ({ user }) => {
   const [query, setQuery] = useSearchParams();
   const name = query.get("name");
   const menuList = [
+    "All",
     "Top",
     "Pants",
     "Dress",
@@ -72,6 +73,8 @@ const Navbar = ({ user }) => {
 
   // 카테고리 별 상품 가져오기
   const handleCategory = (menu) =>{
+    console.log("category")
+    navigate("/");
     const menuLowerCase = menu ? menu.toLowerCase() : null;
     dispatch(productActions.getProductList({name}, menuLowerCase));
   }

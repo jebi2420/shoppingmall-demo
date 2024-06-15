@@ -43,7 +43,7 @@ productController.getProducts = async (req, res)=>{
         const cond = {
             ...name && { name: { $regex: name, $options: "i" } },
             isDeleted: false,
-            ...(menu && { category: menu.toLowerCase()}) // menu가 있는 경우만 카테고리별로 보여주기
+            ...(menu && menu.toLowerCase() !== "all" && { category: menu.toLowerCase()}) // menu가 있는 경우만 카테고리별로 보여주기
         };
 
         let query = Product.find(cond); // 선언
